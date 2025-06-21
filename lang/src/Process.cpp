@@ -40,7 +40,7 @@ Process::Process(    Interpreter* interpreter,bool isRoot)
 
 Process::~Process()
 {
-    INFO("deleting process: %s", name);
+  //  INFO("deleting process: %s", name);
     interpreter=nullptr;
     if (function != nullptr && root) 
     {
@@ -48,6 +48,34 @@ Process::~Process()
         function = nullptr;
     }
     
+
+
+
+}
+
+
+int Process::addLocal(const char* name) 
+{
+   
+    if (localCount >= UINT8_COUNT)
+    {
+        runtimeError("Too many local variables in function.");
+        return -1;
+    }
+    
+     
+    Local *local = &locals[localCount++];
+    
+    local->len = strlen(name);
+    strncpy(local->name, name, local->len);
+    local->name[local->len] = '\0';
+    local->isArg = true;
+    local->depth = 0;
+
+
+
+    
+    return localCount - 1;
 }
 
 int Process::addLocal(const char* name,size_t len, bool isArg) 
@@ -100,6 +128,18 @@ void Process::markInitialized()
 {
       if (scopeDepth == 0) return;
       locals[localCount - 1].depth = scopeDepth;
+}
+
+void Process::init_locals() 
+{
+    
+    // addLocal("x", 4, false);
+    // addLocal("y", 4, false);
+    // addLocal("angle", 6, false);
+    push(std::move(NUMBER(30)));//angle
+    push(std::move(NUMBER(2)));//y
+    push(std::move(NUMBER(360)));//x
+    // markInitialized();
 }
 
 void Process::resetStack()
@@ -419,8 +459,9 @@ bool Process::run( )
     }
 
 
-
-
+//    for (;;) 
+    {
+    
     CallFrame* frame = &frames[frameCount - 1];
     currentFrame = frame;
     if (frame->ip >= frame->function->chunk.code + frame->function->chunk.count)
@@ -486,7 +527,7 @@ bool Process::run( )
             }
             case OP_HALT:
             {
-                WARNING("Process '%s' exited", name);
+               // WARNING("Process '%s' exited", name);
                 status = STATUS_DEAD;
                 return false;
             }
@@ -579,6 +620,7 @@ bool Process::run( )
                         Value result = native(argCount, stackTop - argCount);
                         stackTop -= argCount + 1;
                         push(result);
+                        return true;
 
                 } 
                 else if (IS_PROCESS(value))
@@ -588,6 +630,7 @@ bool Process::run( )
                   //  INFO("Process '%s' called", process->name);
 
                     Process* child = interpreter->add_process(process->name, false, 100);
+                    
               
  
 
@@ -598,6 +641,7 @@ bool Process::run( )
                     cframe->function =  process->process->function;
                     cframe->ip = process->function->chunk.code;
                     cframe->slots = child->stackTop;
+                    child->init_locals();
                     for (int i = argCount-1; i >= 0; i--)
                     {
                         Value arg = peek(i);
@@ -609,7 +653,7 @@ bool Process::run( )
                    // disassembleCode(&process->process->function->chunk, process->name);
                     frame->slots = stackTop - argCount - 1;
        
-                   
+                   return true;
                 }
  
     
@@ -626,8 +670,11 @@ bool Process::run( )
 
                 Value percent = pop();
                 frame_percent += AS_NUMBER(percent);
-                //INFO("Frame: %f", percent.number);
+               // INFO("Frame: %f", percent.number);
                 status = STATUS_RUNNING;
+
+ 
+
                 return true;
                 
             }
@@ -951,13 +998,13 @@ bool Process::run( )
             }
         }
     
-    
+    }
  
     
     //INFO("Process '%s' running", name);
 
-    return status == STATUS_RUNNING;
     #undef READ_BYTE
     #undef READ_SHORT
     #undef READ_CONSTANT
+    return status == STATUS_RUNNING;
 }

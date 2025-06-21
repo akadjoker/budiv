@@ -117,7 +117,15 @@ static Value key_up_Native(int argCount, Value* args)
   return BOOLEAN(isUp);
 }
 
+static Value mouse_x_Native(int argCount, Value* args)
+{
+  return NUMBER(GetMouseX());
+}
 
+static Value mouse_y_Native(int argCount, Value* args)
+{
+  return NUMBER(GetMouseY());
+}
 
 static Value mouse_down_Native(int argCount, Value* args) 
 {
@@ -203,6 +211,9 @@ int main()
    vm.defineNative("mouse_released", mouse_released_Native);
    vm.defineNative("mouse_up", mouse_up_Native);
 
+   vm.defineNative("mouse_x", mouse_x_Native);
+   vm.defineNative("mouse_y", mouse_y_Native);
+
    vm.defineNative("set_color", set_color_Native);
    vm.defineNative("draw_circle", darw_circle_Native);
    vm.defineNative("draw_rectangle", darw_rectangle_Native);
@@ -214,6 +225,7 @@ int main()
   const int screenHeight = 450;
 
   InitWindow(screenWidth, screenHeight, "BuEngine");
+  //SetTargetFPS(60);
   bool done = false;
 
 
@@ -229,24 +241,31 @@ int main()
        done = true;
    }
 
-   while (!done && !WindowShouldClose())
-   {
-      BeginDrawing();
-      ClearBackground(BLACK);
+  //  if (!done)
+  //  {
+  //     vm.disassemble();
+  //     vm.run();
+  //     done = true;
+  //  }
+
+  //  while (!done && !WindowShouldClose())
+  //  {
+  //     BeginDrawing();
+  //     ClearBackground(BLACK);
   
       vm.run();
 
-      DrawFPS(10, 10);
-      EndDrawing();
+  //     DrawFPS(10, 10);
+  //     EndDrawing();
        
-   }
+  //  }
 
 
 
 
   vm.clear();
 
-  CloseWindow();   
+ CloseWindow();   
 
 
      INFO("Objects before collection: %d", GC.countObjects());

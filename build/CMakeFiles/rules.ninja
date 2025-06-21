@@ -7,7 +7,7 @@
 
 # =============================================================================
 # Project: budiv
-# Configurations: Debug
+# Configurations: Release
 # =============================================================================
 # =============================================================================
 
@@ -22,7 +22,7 @@ rule CUSTOM_COMMAND
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER__raylib_Debug
+rule C_COMPILER__raylib_Release
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/gcc-12 $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -32,7 +32,7 @@ rule C_COMPILER__raylib_Debug
 #############################################
 # Rule for linking C static library.
 
-rule C_STATIC_LIBRARY_LINKER__raylib_Debug
+rule C_STATIC_LIBRARY_LINKER__raylib_Release
   command = $PRE_LINK && /usr/bin/cmake -E rm -f $TARGET_FILE && /usr/bin/ar qc $TARGET_FILE $LINK_FLAGS $in && /usr/bin/ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
@@ -41,7 +41,7 @@ rule C_STATIC_LIBRARY_LINKER__raylib_Debug
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER__glfw_Debug
+rule C_COMPILER__glfw_Release
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/gcc-12 $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -51,7 +51,7 @@ rule C_COMPILER__glfw_Debug
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__main_Debug
+rule CXX_COMPILER__main_Release
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -61,7 +61,7 @@ rule CXX_COMPILER__main_Debug
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__main_Debug
+rule CXX_EXECUTABLE_LINKER__main_Release
   command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT

@@ -15,6 +15,11 @@ class ObjProcess;
 class Parser;
 class Process;
 
+const int ID_X=0;
+const int ID_Y=1;
+const int ID_ANGLE=2;
+
+
 
 Value INTEGER(int value);
 Value NUMBER(double value);
@@ -357,7 +362,7 @@ private:
     void markInitialized();
 
 
-
+    void init_locals();
 
     friend class GarbageCollector;
     friend class Interpreter;
@@ -365,7 +370,7 @@ private:
     Interpreter* interpreter;
 
 public:
-    u32 pid; // Process ID
+ 
     char name[64];
     u32 id;
     s32 priority;
@@ -384,6 +389,7 @@ public:
 
     int addLocal(const char* name,size_t len,bool isArg);
     int resolveLocal(const char* name,size_t len);
+    int addLocal(const char* name);
 
 
     void resetStack();
@@ -431,6 +437,7 @@ class Interpreter {
     //blueprints
 
     ValueArray<Process*> processes;
+    ValueArray<ObjProcess*> raw_processes;
   
 
 

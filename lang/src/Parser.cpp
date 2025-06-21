@@ -311,9 +311,7 @@ void Parser::endScope()
 {
     current_process->scopeDepth--;
 
-    while (current_process->localCount > 0
-           && current_process->locals[current_process->localCount - 1].depth
-               > current_process->scopeDepth)
+    while (current_process->localCount > 0 && current_process->locals[current_process->localCount - 1].depth> current_process->scopeDepth && !current_process->locals[current_process->localCount - 1].isArg)
     {
         emitByte(OP_POP);
         current_process->localCount--;
@@ -881,15 +879,20 @@ void Parser::procDeclaration()
     String name = previous.lexeme;
     consume(TokenType::LEFT_PAREN, "Expect '(' after process name.");
     
-
-    
-    current_process = vm->create_process(previous.lexeme.c_str());
     
     u32 nameIndex = vm->addConstant(STRING(name.c_str()));
-
+    current_process = vm->create_process(previous.lexeme.c_str());
     current_function = current_process->function;
-    beginScope();
+    current_process->addLocal("x");
+    current_process->addLocal("y");
+    current_process->addLocal("angle");
 
+   // beginScope();
+
+
+    // current_process->addLocal("y", 1, true);
+    // current_process->markInitialized();
+    
     // current_process->addLocal(name.c_str(), name.length(), true);
     // current_process->markInitialized();
     // u32 index = vm->addConstant(STRING(name.c_str()));
@@ -906,45 +909,54 @@ void Parser::procDeclaration()
             
             consume(TokenType::IDENTIFIER, "Expect parameter name.");
             String paramName = previous.lexeme;
-             current_process->addLocal(paramName.c_str(), paramName.length(), true);
-            current_process->markInitialized();
-         //    u32 index = vm->addConstant(STRING(paramName.c_str()));
-          //   emitBytes(OP_SET_LOCAL, index); 
+            //current_process->addLocal(paramName.c_str(), paramName.length(), true);
+            //current_process->markInitialized();
+            current_process->addLocal(paramName.c_str());
+            //    u32 index = vm->addConstant(STRING(paramName.c_str()));
+            //   emitBytes(OP_SET_LOCAL, index); 
         } while (match(TokenType::COMMA));
     }
     consume(TokenType::RIGHT_PAREN, "Expect ')' after parameters.");
     consume(TokenType::LEFT_BRACE, "Expect '{' before process body.");
-  
 
+        
+
+    
     call_return = false;
     
     while (!check(TokenType::RIGHT_BRACE) && !check(TokenType::END_OF_FILE))
     {
         if (match(TokenType::VAR))
         {
-
+            
             varProcessDeclaration();
+
             //varDeclaration();
         }
         else
         {
             statement();
         }
-
+        
         if (panic_mode) synchronize();
     }
-
-    consume(TokenType::RIGHT_BRACE, "Expect '}' after block.");
     
-    endScope();
+    consume(TokenType::RIGHT_BRACE, "Expect '}' after block.");
+
+
+
+
+    //endScope();
+
+ 
     
     emitByte(OP_HALT);
     
     ObjProcess* process= vm->add_raw_process(name.c_str());
     process->process  = current_process;
     process->function = current_function;
-
-   //  process->process->disassembleCode(&process->function->chunk, "process");
+    
+    //  process->process->disassembleCode(&process->function->chunk, "process");
    
     current_process  = preProcess;
     current_function = prefunction;

@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: budiv
-# Configurations: Debug
+# Configurations: Release
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Debug
+CONFIGURATION = Release
 # =============================================================================
 # Include auxiliary files.
 
@@ -250,58 +250,58 @@ build vendor/raylib/CMakeFiles/uninstall | ${cmake_ninja_workdir}vendor/raylib/C
 
 build cmake_object_order_depends_target_raylib: phony || cmake_object_order_depends_target_glfw
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/rcore.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rcore.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/rcore.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rcore.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/rcore.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/rmodels.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rmodels.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/rmodels.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rmodels.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/rmodels.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/rshapes.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rshapes.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/rshapes.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rshapes.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/rshapes.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/rtext.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rtext.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/rtext.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rtext.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/rtext.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/rtextures.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rtextures.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/rtextures.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/rtextures.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/rtextures.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/utils.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/utils.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/utils.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/utils.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/utils.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
 
-build vendor/raylib/raylib/CMakeFiles/raylib.dir/raudio.c.o: C_COMPILER__raylib_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/raudio.c || cmake_object_order_depends_target_raylib
+build vendor/raylib/raylib/CMakeFiles/raylib.dir/raudio.c.o: C_COMPILER__raylib_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/raudio.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = vendor/raylib/raylib/CMakeFiles/raylib.dir/raudio.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -isystem /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
@@ -314,8 +314,8 @@ build vendor/raylib/raylib/CMakeFiles/raylib.dir/raudio.c.o: C_COMPILER__raylib_
 #############################################
 # Link the static library vendor/raylib/raylib/libraylib.a
 
-build vendor/raylib/raylib/libraylib.a: C_STATIC_LIBRARY_LINKER__raylib_Debug vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rcore.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rmodels.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rshapes.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rtext.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rtextures.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/utils.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/raudio.c.o || vendor/raylib/raylib/external/glfw/src/glfw
-  LANGUAGE_COMPILE_FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g
+build vendor/raylib/raylib/libraylib.a: C_STATIC_LIBRARY_LINKER__raylib_Release vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rcore.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rmodels.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rshapes.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rtext.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/rtextures.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/utils.c.o vendor/raylib/raylib/CMakeFiles/raylib.dir/raudio.c.o || vendor/raylib/raylib/external/glfw/src/glfw
+  LANGUAGE_COMPILE_FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG
   OBJECT_DIR = vendor/raylib/raylib/CMakeFiles/raylib.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -519,186 +519,186 @@ build vendor/raylib/raylib/external/glfw/install/strip: phony vendor/raylib/rayl
 
 build cmake_object_order_depends_target_glfw: phony || vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/context.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/init.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/init.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/input.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/input.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/monitor.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/platform.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/platform.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/vulkan.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/vulkan.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/window.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/window.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/egl_context.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/egl_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/osmesa_context.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/osmesa_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_init.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_init.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_monitor.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_window.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_window.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_joystick.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/null_joystick.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99 -Wdeclaration-after-statement
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99 -Wdeclaration-after-statement
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_module.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_module.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_time.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_time.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_thread.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_thread.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/x11_init.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/x11_init.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/x11_monitor.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/x11_monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/x11_window.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/x11_window.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/xkb_unicode.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/xkb_unicode.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/glx_context.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/glx_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/linux_joystick.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/linux_joystick.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
 
-build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o: C_COMPILER__glfw_Debug /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_poll.c || cmake_object_order_depends_target_glfw
+build vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o: C_COMPILER__glfw_Release /home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src/posix_poll.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
   DEP_FILE = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o.d
-  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -fPIC -Wall -std=c99
+  FLAGS = -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -fPIC -Wall -std=c99
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/src -I/home/djoker/code/cpp/bugame/budiv/build/vendor/raylib/raylib/external/glfw/src
   OBJECT_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = vendor/raylib/raylib/external/glfw/src/CMakeFiles/glfw.dir
@@ -827,58 +827,58 @@ build vendor/raylib/raylib/external/glfw/src/CMakeFiles/update_mappings | ${cmak
 
 build cmake_object_order_depends_target_main: phony || cmake_object_order_depends_target_glfw cmake_object_order_depends_target_raylib
 
-build lang/CMakeFiles/main.dir/src/Chunk.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/Chunk.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/Chunk.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/Chunk.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/Chunk.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
 
-build lang/CMakeFiles/main.dir/src/Lexer.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/Lexer.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/Lexer.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/Lexer.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/Lexer.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
 
-build lang/CMakeFiles/main.dir/src/Parser.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/Parser.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/Parser.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/Parser.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/Parser.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
 
-build lang/CMakeFiles/main.dir/src/Process.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/Process.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/Process.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/Process.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/Process.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
 
-build lang/CMakeFiles/main.dir/src/Utils.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/Utils.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/Utils.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/Utils.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/Utils.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
 
-build lang/CMakeFiles/main.dir/src/VM.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/VM.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/VM.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/VM.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/VM.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
 
-build lang/CMakeFiles/main.dir/src/main.cpp.o: CXX_COMPILER__main_Debug /home/djoker/code/cpp/bugame/budiv/lang/src/main.cpp || cmake_object_order_depends_target_main
+build lang/CMakeFiles/main.dir/src/main.cpp.o: CXX_COMPILER__main_Release /home/djoker/code/cpp/bugame/budiv/lang/src/main.cpp || cmake_object_order_depends_target_main
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
   DEP_FILE = lang/CMakeFiles/main.dir/src/main.cpp.o.d
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -O3 -DNDEBUG -std=c++17
   INCLUDES = -I/home/djoker/code/cpp/bugame/budiv/lang/include -I/home/djoker/code/cpp/bugame/budiv/lang/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src -I/home/djoker/code/cpp/bugame/budiv/vendor/raylib/src/external/glfw/include
   OBJECT_DIR = lang/CMakeFiles/main.dir
   OBJECT_FILE_DIR = lang/CMakeFiles/main.dir/src
@@ -891,9 +891,9 @@ build lang/CMakeFiles/main.dir/src/main.cpp.o: CXX_COMPILER__main_Debug /home/dj
 #############################################
 # Link the executable ../bin/main
 
-build ../bin/main: CXX_EXECUTABLE_LINKER__main_Debug lang/CMakeFiles/main.dir/src/Chunk.cpp.o lang/CMakeFiles/main.dir/src/Lexer.cpp.o lang/CMakeFiles/main.dir/src/Parser.cpp.o lang/CMakeFiles/main.dir/src/Process.cpp.o lang/CMakeFiles/main.dir/src/Utils.cpp.o lang/CMakeFiles/main.dir/src/VM.cpp.o lang/CMakeFiles/main.dir/src/main.cpp.o | vendor/raylib/raylib/libraylib.a /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libm.so || vendor/raylib/raylib/external/glfw/src/glfw vendor/raylib/raylib/libraylib.a
-  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g
-  LINK_FLAGS = -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG
+build ../bin/main: CXX_EXECUTABLE_LINKER__main_Release lang/CMakeFiles/main.dir/src/Chunk.cpp.o lang/CMakeFiles/main.dir/src/Lexer.cpp.o lang/CMakeFiles/main.dir/src/Parser.cpp.o lang/CMakeFiles/main.dir/src/Process.cpp.o lang/CMakeFiles/main.dir/src/Utils.cpp.o lang/CMakeFiles/main.dir/src/VM.cpp.o lang/CMakeFiles/main.dir/src/main.cpp.o | vendor/raylib/raylib/libraylib.a /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libm.so || vendor/raylib/raylib/external/glfw/src/glfw vendor/raylib/raylib/libraylib.a
+  FLAGS = -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -O3 -DNDEBUG
+  LINK_FLAGS = -O3 -DNDEBUG
   LINK_LIBRARIES = vendor/raylib/raylib/libraylib.a  -lm  -lpthread  -ldl  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libGLU.so  /usr/lib/x86_64-linux-gnu/librt.a  -lm  -ldl
   OBJECT_DIR = lang/CMakeFiles/main.dir
   POST_BUILD = :

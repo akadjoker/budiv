@@ -1,7 +1,7 @@
 #include "VM.hpp"
 #include "Utils.hpp"
 #include "Parser.hpp"
-
+#include <raylib.h>
 GarbageCollector GC;
 
 
@@ -348,7 +348,7 @@ ObjFunction::ObjFunction(const char *n):  arity(0)
 ObjProcess* Interpreter::add_raw_process(const char* name) 
 { 
     ObjProcess* process = new ObjProcess(name);
-   // raw_processes.push_back(process);
+    raw_processes.push_back(process);
     return process;
 }
 
@@ -393,11 +393,11 @@ Interpreter::~Interpreter()
     }
     processes.clear();
  
-    // for (u32 i = 0; i < raw_processes.getSize (); i++)
-    // {
-    //  //  delete raw_processes[i];
-    // }
-    // raw_processes.clear();  
+    for (u32 i = 0; i < raw_processes.getSize (); i++)
+    {
+      // delete raw_processes[i];
+    }
+    raw_processes.clear();  
 
     constants.clear();
 
@@ -635,9 +635,20 @@ void Interpreter::cleanup_dead_processes()
                 current->next->prev = current->prev;
             }
 
-            //     printf("Process %s removed (dead)\n", current->name);
+            //printf("Process %s removed (dead)\n", current->name);
             delete current;
             priority_dirty = true;
+        } else
+        {
+          //    if (!current->root)
+            {
+            //bool still_running = current->run();
+            double x = current->stack[ID_X].number;
+            double y = current->stack[ID_Y].number;
+            double angle = current->stack[ID_ANGLE].number;
+            DrawCircle(x, y, 5, WHITE);
+         
+            }
         }
 
         current = next;
@@ -673,7 +684,7 @@ bool Interpreter::kill_process(u32 pid)
     Process* current = first_instance;
     while (current)
     {
-        if (current->pid == pid)
+        if (current->id == pid)
         {
             current->status = STATUS_KILLED;
             break;
@@ -703,7 +714,7 @@ Process* Interpreter::find_process(u32 pid)
     Process* current = first_instance;
     while (current)
     {
-        if (current->pid == pid)
+        if (current->id == pid)
         {
             return current;
         }
@@ -767,27 +778,35 @@ u32 Interpreter::run()
     must_exit = false;
     
 
-    if  (!has_alive_processes() && (must_exit || panicMode) ) 
+    // if  (!has_alive_processes() && (must_exit || panicMode) ) 
+    // {
+    //     return exit_value;
+    // }
+
+    //while  (has_alive_processes() && (!must_exit || !panicMode)  && !WindowShouldClose()) 
+    while  ( (!must_exit || !panicMode)  && !WindowShouldClose()) 
     {
-        return exit_value;
-    }
-    {
+
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+
         frame_completed = false;
         current_frame++;
 
       //  printf("\n=== FRAME %u ===\n", current_frame);
 
-        instance_reset_iterator_by_priority();
-        Process* i = instance_next_by_priority();
-        uint32_t i_count = 0;
+       instance_reset_iterator_by_priority();
+       Process* i = instance_next_by_priority();
+       uint32_t i_count = 0;
 
-        while (i && !must_exit && !panicMode)
+       while (i && !must_exit && !panicMode)
         {
             if (i->frame_percent < 100)
             {
                 ProcessStatus status = i->status;
 
-                // ✅ VERIFICAR SE PROCESSO AINDA ESTÁ VIVO ANTES DE EXECUTAR
+              
                 if (status == STATUS_RUNNING)
                 {
                  //   printf("Executing process: %s (priority: %d)\n", i->name, i->priority);
@@ -797,13 +816,27 @@ u32 Interpreter::run()
                     
                     if (still_running && i->status == STATUS_RUNNING)
                     {
+                      
+                        if (!i->root)
+                        {
+
+                            // double x = i->stack[ID_X].number;
+                            // double y = i->stack[ID_Y].number;
+                            // double angle = i->stack[ID_ANGLE].number;
+
+                            // DrawCircle(x, y, 5, WHITE);
+                          
+                            //INFO("Process %s still running (id: %d) x: %f, y: %f, angle: %f\n", i->name, (int)i->id, x, y, angle);
+                        }
+
+
+
                         i_count++;
                     }
                     else
                     {
                         // Processo morreu/foi morto
-                        WARNING("Process %s terminated (status: %d)\n", 
-                               i->name, (int)i->status);
+                       // WARNING("Process %s terminated (status: %d)\n", i->name, (int)i->status);
                     }
 
                     if (must_exit) break;
@@ -813,43 +846,56 @@ u32 Interpreter::run()
                     // Processo já morreu, não executar
                     WARNING("Process %s is dead/killed, skipping\n", i->name);
                 }
+            
+               i->frame_percent -= 100;
             }
-
             i = instance_next_by_priority();
         }
 
-        // Frame completion logic
-        if (i_count == 0)
-        {
-            frame_completed = true;
+        cleanup_dead_processes();
+
+
+       //  DrawCircle(GetMouseX(), GetMouseY(),  5, RED);
+
+        DrawFPS(10, 10);
+        EndDrawing();
+
+
+ 
+        // if (i_count == 0)
+        // {
+        //     frame_completed = true;
             
-            // Update processes
-            Process* current = first_instance;
-            while (current)
-            {
-                current->saved_status = current->status;
+        //     // Update processes
+        //     Process* current = first_instance;
+        //     while (current)
+        //     {
+        //         current->saved_status = current->status;
 
-                if (current->status == STATUS_DEAD
-                    || current->status == STATUS_KILLED
-                    || current->status == STATUS_RUNNING)
-                {
-                    current->frame_percent -= 100;
-                }
+        //         if (current->status == STATUS_DEAD
+        //             || current->status == STATUS_KILLED
+        //             || current->status == STATUS_RUNNING)
+        //         {
+        //             current->frame_percent -= 100;
+        //         }
 
-                if (current->last_priority != current->priority)
-                {
-                    current->saved_priority = current->priority;
-                    current->last_priority = current->priority;
-                    priority_dirty = true;
-                }
+        //         if (current->last_priority != current->priority)
+        //         {
+        //             current->saved_priority = current->priority;
+        //             current->last_priority = current->priority;
+        //             priority_dirty = true;
+        //         }
 
-                current = current->next;
-            }
+        //         current = current->next;
+        //     }
 
-            cleanup_dead_processes();
-        //    printf("Frame completed!\n");
-        }
+        //    // cleanup_dead_processes();
+        //   //  printf("Frame completed!\n");
+        // }
     }
+
+  
+
 
     return exit_value;
 }

@@ -1,27 +1,31 @@
  
 process bala(_x,_y)
 {
-  var x=_x;
-  var y=_y;
-  print("Start");
+   x=_x;
+   y=_y;
+
   loop
   {
 
-    x=x+1;
-   // y=y+1;
+       x=x+5;
+ 
 
-      if(x>500)
+      if(x>800)
       {
         break;
       }
-   
-      draw_circle(x,y,20);
+    
+  
+    frame(100);
+
   }
-  print("End");
+ // print("by by");
 }
 
 process main()
 {
+  x=-1;
+  y=-1;
 
   loop 
   {
@@ -32,10 +36,14 @@ process main()
      if (mouse_down(0))
      {
 
-        bala(200,100);
+        bala(mouse_x(),mouse_y());
      }
+     draw_circle(mouse_x(),mouse_y(),5);
+     frame;
   }
   print("By!By! main");
 }
 
 main();
+
+
