@@ -1,37 +1,37 @@
 [
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Chunk.cpp.o -c /home/djoker/code/cpp/bugame/div/src/Chunk.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/Chunk.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Chunk.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/Chunk.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/Chunk.cpp"
 },
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Lexer.cpp.o -c /home/djoker/code/cpp/bugame/div/src/Lexer.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/Lexer.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Lexer.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/Lexer.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/Lexer.cpp"
 },
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Parser.cpp.o -c /home/djoker/code/cpp/bugame/div/src/Parser.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/Parser.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Parser.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/Parser.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/Parser.cpp"
 },
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Process.cpp.o -c /home/djoker/code/cpp/bugame/div/src/Process.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/Process.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Process.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/Process.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/Process.cpp"
 },
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Utils.cpp.o -c /home/djoker/code/cpp/bugame/div/src/Utils.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/Utils.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/Utils.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/Utils.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/Utils.cpp"
 },
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/VM.cpp.o -c /home/djoker/code/cpp/bugame/div/src/VM.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/VM.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/VM.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/VM.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/VM.cpp"
 },
 {
-  "directory": "/home/djoker/code/cpp/bugame/div/build",
-  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/div/include -I/home/djoker/code/cpp/bugame/div/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/main.cpp.o -c /home/djoker/code/cpp/bugame/div/src/main.cpp",
-  "file": "/home/djoker/code/cpp/bugame/div/src/main.cpp"
+  "directory": "/home/djoker/code/cpp/bugame/budiv/build",
+  "command": "/usr/bin/c++ -I/home/djoker/code/cpp/bugame/budiv/include -I/home/djoker/code/cpp/bugame/budiv/src  -fexceptions -frtti -fno-strict-aliasing -DUSE_GRAPHICS  -g -Wextra -Wall -Wno-missing-field-initializers -Wundef -Wuninitialized -Wunused -Wno-unused-parameter -Wwrite-strings -Wchar-subscripts -funsigned-char -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Winvalid-pch -D_DEBUG -std=c++17 -o CMakeFiles/main.dir/src/main.cpp.o -c /home/djoker/code/cpp/bugame/budiv/src/main.cpp",
+  "file": "/home/djoker/code/cpp/bugame/budiv/src/main.cpp"
 }
 ]

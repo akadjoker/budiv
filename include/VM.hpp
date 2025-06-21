@@ -62,10 +62,7 @@ enum class ValueType
 
 enum class ObjType
 {
-    FUNCTION,
-    NATIVE,
-    PROCESS,
-    CLOSURE,
+
     UPVALUE,
     STRING
 };
@@ -191,14 +188,14 @@ struct LoopContext
 
 typedef Value (*NativeFn)(int argCount, Value* args);
 
-class ObjNative : public GCObject 
+class ObjNative 
 {
 public:
     NativeFn function;
-    ObjNative(NativeFn function): GCObject(ObjType::NATIVE), function(function) {}
+    ObjNative(NativeFn function):   function(function) {}
 };
 
-class ObjFunction : public GCObject 
+class ObjFunction  
 {
  
 public:
@@ -213,7 +210,7 @@ public:
 };
 
 
-class ObjProcess  : public GCObject 
+class ObjProcess  
 {
  
 public:
@@ -252,7 +249,10 @@ struct Value
             case ValueType::NIL: return false;
             case ValueType::BOOL: return boolean;
             case ValueType::NUMBER: return number != 0.0;
-            case ValueType::OBJ: return true; // Strings and other objects are truthy
+            case ValueType::OBJ:
+            case ValueType::FUNCTION:
+            case ValueType::NATIVE:
+            case ValueType::PROCESS: return true; // Strings and other objects are truthy
             case ValueType::STRING: return string->length != 0;
 
             default: return false;
@@ -418,15 +418,22 @@ class Interpreter {
     bool must_exit;
     s32 exit_value;
     bool priority_dirty;
+
+
+    //blueprints
     ValueArray<ObjFunction*> functions;
     ValueArray<ObjNative*> natives;
     ValueArray<Process*> processes;
+    ValueArray<ObjProcess*> raw_processes;
+
+
     Parser* parser;
     UnorderedMap<String, Value> globals;
     ValueArray<Value> constants;
     friend class Parser;
     friend class Process;
-
+    
+    ObjProcess* add_raw_process(const char* name);
 public:
     Interpreter();
     ~Interpreter();
@@ -435,6 +442,8 @@ public:
     Process* create_process(const char* name);
 
     bool call_process(Process* process, int32_t priority = 0);
+
+    
 
 
     ObjFunction* add_function(const char* name, u8 arity = 0);

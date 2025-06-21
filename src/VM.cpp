@@ -219,7 +219,7 @@ Value NATIVE(ObjNative* native)
     Value v;
     v.native = native;
     v.type = ValueType::NATIVE;
-    GC.addObject(v.native);
+ //   GC.addObject(v.native);
     return v;
 }
 
@@ -227,7 +227,7 @@ Value PROCESS(ObjProcess* process)
 {
     Value v;
     v.process = process;
-    GC.addObject(v.process);
+  //  GC.addObject(v.process);
     v.type = ValueType::PROCESS;
     return v;
 }
@@ -237,7 +237,7 @@ Value FUNCTION(ObjFunction* function)
     Value v;
     v.function = function;
     v.type = ValueType::FUNCTION;
-    GC.addObject(v.function);
+ //   GC.addObject(v.function);
     return v;
 }
 
@@ -325,26 +325,32 @@ void Value::print()
 }
 
 
-ObjFunction::ObjFunction():GCObject( ObjType::FUNCTION), arity(0)
+ObjFunction::ObjFunction():  arity(0)
 {
     size_t len = strlen("Function");
     strncpy(name, "Function", len);
     name[len] = '\0';
 }
-ObjFunction::ObjFunction(const String &n):GCObject( ObjType::FUNCTION), arity(0)
+ObjFunction::ObjFunction(const String &n): arity(0)
 {
     size_t len = n.length();
     strncpy(name, n.c_str(), len);
     name[len] = '\0';
 }
-ObjFunction::ObjFunction(const char *n):GCObject( ObjType::FUNCTION), arity(0)
+ObjFunction::ObjFunction(const char *n):  arity(0)
 {
     size_t len = strlen(n);
     strncpy(name, n, len);
     name[len] = '\0';
 }
 
- 
+
+ObjProcess* Interpreter::add_raw_process(const char* name) 
+{ 
+    ObjProcess* process = new ObjProcess(name);
+    raw_processes.push_back(process);
+    return process;
+}
 
 Interpreter::Interpreter()
 {
@@ -374,10 +380,10 @@ Interpreter::~Interpreter()
     clear();
     delete first_instance;
 
-    // for (u32 i = 0; i < functions.getSize (); i++)
-    // {
-    //   //  delete functions[i];
-    // }
+    for (u32 i = 0; i < functions.getSize (); i++)
+    {
+        delete functions[i];
+    }
     functions.clear();
 
     for (u32 i = 0; i < processes.getSize (); i++)
@@ -385,19 +391,19 @@ Interpreter::~Interpreter()
         delete processes[i];
     }
     processes.clear();
-
-    // for (u32 i = 0; i < constants.getSize (); i++)
-    // {
-    //    // constants[i].print();
-    // }
  
+    for (u32 i = 0; i < raw_processes.getSize (); i++)
+    {
+        delete raw_processes[i];
+    }
+    raw_processes.clear();  
 
     constants.clear();
 
-    // for (u32 i = 0; i < natives.getSize (); i++)
-    // {
-    //   //  delete natives[i];
-    // }
+    for (u32 i = 0; i < natives.getSize (); i++)
+    {
+        delete natives[i];
+    }
     natives.clear();
 
     free(priority_list);
@@ -974,7 +980,7 @@ void Interpreter::disassemble()
     }
 }
 
-ObjProcess::ObjProcess():GCObject( ObjType::PROCESS )
+ObjProcess::ObjProcess() 
 {
     
     size_t len = strlen("Process");
@@ -984,7 +990,7 @@ ObjProcess::ObjProcess():GCObject( ObjType::PROCESS )
     function = nullptr;
 }
 
-ObjProcess::ObjProcess(const String& n) :GCObject( ObjType::PROCESS )
+ObjProcess::ObjProcess(const String& n)  
 {
 
      
@@ -995,7 +1001,7 @@ ObjProcess::ObjProcess(const String& n) :GCObject( ObjType::PROCESS )
     function = nullptr;
 }
 
-ObjProcess::ObjProcess(const char* n) :GCObject( ObjType::PROCESS )
+ObjProcess::ObjProcess(const char* n) 
 {
     
     size_t len = strlen(n);

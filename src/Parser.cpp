@@ -940,7 +940,7 @@ void Parser::procDeclaration()
     
     emitByte(OP_HALT);
     
-    ObjProcess* process = new ObjProcess(name);
+    ObjProcess* process= vm->add_raw_process(name.c_str());
     process->process  = current_process;
     process->function = current_function;
 
