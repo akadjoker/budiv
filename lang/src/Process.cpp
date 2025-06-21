@@ -606,7 +606,7 @@ bool Process::run( )
         
                     
 
-                    disassembleCode(&process->process->function->chunk, process->name);
+                   // disassembleCode(&process->process->function->chunk, process->name);
                     frame->slots = stackTop - argCount - 1;
        
                    

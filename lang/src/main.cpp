@@ -6,6 +6,8 @@
 //#include "TestRai.hpp"
 //#include "TesteMap.hpp"
 
+#include <raylib.h>
+
 #include "Config.hpp"
 #include "VM.hpp"
 #include "Utils.hpp"
@@ -90,6 +92,96 @@ static Value writeln_Native(int argCount, Value* args)
 }
 
 
+static Value key_down_Native(int argCount, Value* args) 
+{
+  bool isDown = IsKeyDown(AS_INTEGER(args[0]));
+  return BOOLEAN(isDown);
+}
+
+static Value key_pressed_Native(int argCount, Value* args) 
+{
+  bool isPressed = IsKeyPressed(AS_INTEGER(args[0]));
+  return BOOLEAN(isPressed);
+}
+
+static Value key_released_Native(int argCount, Value* args) 
+{
+  bool isReleased = IsKeyReleased(AS_INTEGER(args[0]));
+  return BOOLEAN(isReleased);
+}
+
+
+static Value key_up_Native(int argCount, Value* args) 
+{
+  bool isUp = IsKeyUp(AS_INTEGER(args[0]));
+  return BOOLEAN(isUp);
+}
+
+
+
+static Value mouse_down_Native(int argCount, Value* args) 
+{
+  bool isDown = IsMouseButtonDown(AS_INTEGER(args[0]));
+  return BOOLEAN(isDown);
+}
+
+static Value mouse_pressed_Native(int argCount, Value* args) 
+{
+  bool isPressed = IsMouseButtonPressed(AS_INTEGER(args[0]));
+  return BOOLEAN(isPressed);
+}
+
+static Value mouse_released_Native(int argCount, Value* args) 
+{
+  bool isReleased = IsMouseButtonReleased(AS_INTEGER(args[0]));
+  return BOOLEAN(isReleased);
+}
+
+
+static Value mouse_up_Native(int argCount, Value* args) 
+{
+  bool isUp = IsMouseButtonUp(AS_INTEGER(args[0]));
+  return BOOLEAN(isUp);
+}
+
+
+static Color use_color = WHITE;
+static Value set_color_Native(int argCount, Value* args) 
+{
+  use_color.r = AS_INTEGER(args[0]);
+  use_color.g = AS_INTEGER(args[1]);
+  use_color.b = AS_INTEGER(args[2]);
+  use_color.a = AS_INTEGER(args[3]);
+  return NIL();
+}
+
+static Value darw_circle_Native(int argCount, Value* args) 
+{
+  DrawCircle(AS_INTEGER(args[0]), AS_INTEGER(args[1]), AS_INTEGER(args[2]), use_color);
+  return NIL();
+}
+
+static Value darw_rectangle_Native(int argCount, Value* args) 
+{
+  DrawRectangle(AS_INTEGER(args[0]), AS_INTEGER(args[1]), AS_INTEGER(args[2]), AS_INTEGER(args[3]), use_color);
+  return NIL();
+}
+
+static Value darw_line_Native(int argCount, Value* args) 
+{
+  DrawLine(AS_INTEGER(args[0]), AS_INTEGER(args[1]), AS_INTEGER(args[2]), AS_INTEGER(args[3]), use_color);
+  return NIL();
+}
+
+static Value darw_text_Native(int argCount, Value* args) 
+{
+
+  ObjString* str = AS_STRING(args[0]);
+  DrawText(str->data, AS_INTEGER(args[1]), AS_INTEGER(args[2]), AS_INTEGER(args[3]), use_color);
+  return NIL();
+}
+
+
 int main()
 {
 
@@ -101,20 +193,61 @@ int main()
    vm.defineNative("write", write_Native  );
    vm.defineNative("writeln", writeln_Native);
 
-   if (vm.compile_file("main.bu"))
-   {
+   vm.defineNative("key_down", key_down_Native);
+   vm.defineNative("key_pressed", key_pressed_Native);
+   vm.defineNative("key_released", key_released_Native);
+   vm.defineNative("key_up", key_up_Native);
+
+   vm.defineNative("mouse_down", mouse_down_Native);
+   vm.defineNative("mouse_pressed", mouse_pressed_Native);
+   vm.defineNative("mouse_released", mouse_released_Native);
+   vm.defineNative("mouse_up", mouse_up_Native);
+
+   vm.defineNative("set_color", set_color_Native);
+   vm.defineNative("draw_circle", darw_circle_Native);
+   vm.defineNative("draw_rectangle", darw_rectangle_Native);
+   vm.defineNative("draw_line", darw_line_Native);
+   vm.defineNative("draw_text", darw_text_Native);
 
 
+   const int screenWidth = 800;
+  const int screenHeight = 450;
 
-        vm.disassemble();
+  InitWindow(screenWidth, screenHeight, "BuEngine");
+  bool done = false;
+
+
+  if (!vm.compile_file("main.bu"))
+  {
+
+
+      //   vm.disassemble();
 
       //  Process* main = vm.find_process("_main_");
       //   main->run();
-       
-        vm.run();
+  
+       done = true;
    }
- 
+
+   while (!done && !WindowShouldClose())
+   {
+      BeginDrawing();
+      ClearBackground(BLACK);
+  
+      vm.run();
+
+      DrawFPS(10, 10);
+      EndDrawing();
+       
+   }
+
+
+
+
   vm.clear();
+
+  CloseWindow();   
+
 
      INFO("Objects before collection: %d", GC.countObjects());
      GC.collect();

@@ -765,8 +765,12 @@ void Interpreter::defineNatives(const NativeReg* natives)
 u32 Interpreter::run()
 {
     must_exit = false;
+    
 
-    while (has_alive_processes() && !must_exit && !panicMode)
+    if  (!has_alive_processes() && (must_exit || panicMode) ) 
+    {
+        return exit_value;
+    }
     {
         frame_completed = false;
         current_frame++;
