@@ -254,7 +254,7 @@ bool IS_FALSEY(const Value& value) { return value.isFalsey(); }
 bool IS_TRUTHY(const Value& value) { return value.isTruthy(); }
 
 
-const ObjString* AS_STRING(const Value& value) { return value.string; }
+ObjString* AS_STRING(const Value& value) { return value.string; }
 double AS_NUMBER(const Value& value) { return value.number; }
 int AS_INTEGER(const Value& value) { return static_cast<int>(value.number); }
 bool AS_BOOLEAN(const Value& value) { return value.boolean; }
@@ -348,7 +348,7 @@ ObjFunction::ObjFunction(const char *n):  arity(0)
 ObjProcess* Interpreter::add_raw_process(const char* name) 
 { 
     ObjProcess* process = new ObjProcess(name);
-    raw_processes.push_back(process);
+   // raw_processes.push_back(process);
     return process;
 }
 
@@ -370,6 +370,7 @@ Interpreter::Interpreter()
     priority_list = (Process**)realloc(priority_list, priority_list_capacity * sizeof(Process*));
     parser = new Parser(this);
     main_process = add_process("_main_", true, 0);
+    panicMode = false;
     
 }
 
@@ -380,11 +381,11 @@ Interpreter::~Interpreter()
     clear();
     delete first_instance;
 
-    for (u32 i = 0; i < functions.getSize (); i++)
-    {
-        delete functions[i];
-    }
-    functions.clear();
+    // for (u32 i = 0; i < functions.getSize (); i++)
+    // {
+    //   // delete functions[i];
+    // }
+    // functions.clear();
 
     for (u32 i = 0; i < processes.getSize (); i++)
     {
@@ -392,19 +393,40 @@ Interpreter::~Interpreter()
     }
     processes.clear();
  
-    for (u32 i = 0; i < raw_processes.getSize (); i++)
-    {
-        delete raw_processes[i];
-    }
-    raw_processes.clear();  
+    // for (u32 i = 0; i < raw_processes.getSize (); i++)
+    // {
+    //  //  delete raw_processes[i];
+    // }
+    // raw_processes.clear();  
 
     constants.clear();
 
-    for (u32 i = 0; i < natives.getSize (); i++)
+    // for (u32 i = 0; i < natives.getSize (); i++)
+    // {
+    //     delete natives[i];
+    // }
+    // natives.clear();
+
+
+    auto all = globals.get_all_pairs();
+    for ( auto& kv : all) 
     {
-        delete natives[i];
+        if (IS_FUNCTION(kv.value))
+        {
+            delete kv.value.function;
+        } else 
+        if (IS_NATIVE(kv.value))
+        {
+            delete kv.value.native;
+        } else 
+        if (IS_PROCESS(kv.value))
+        {
+           delete kv.value.process;
+        }
+        
+//        kv.value.print();
     }
-    natives.clear();
+    globals.clear();
 
     free(priority_list);
 }
@@ -427,6 +449,7 @@ void Interpreter::clear()
     priority_list_size = 0;
     priority_dirty = false;
     main_process =      add_process("_main_", true, 0);
+    panicMode = false;
 
 }
 
@@ -716,7 +739,7 @@ bool Interpreter::has_alive_processes() const
     ObjNative *native = new ObjNative(function);
  
 
-    natives.push_back(native);
+   // natives.push_back(native);
 
     main_process->push(STRING(name));
     main_process->push(NATIVE(native));
@@ -731,11 +754,19 @@ bool Interpreter::has_alive_processes() const
     main_process->pop();
 }
 
+void Interpreter::defineNatives(const NativeReg* natives) 
+{
+    for (int i = 0; natives[i].name != nullptr; ++i) 
+    {
+        defineNative(natives[i].name, natives[i].function);
+    }
+}
+
 u32 Interpreter::run()
 {
     must_exit = false;
 
-    while (has_alive_processes() && !must_exit)
+    while (has_alive_processes() && !must_exit && !panicMode)
     {
         frame_completed = false;
         current_frame++;
@@ -746,7 +777,7 @@ u32 Interpreter::run()
         Process* i = instance_next_by_priority();
         uint32_t i_count = 0;
 
-        while (i && !must_exit)
+        while (i && !must_exit && !panicMode)
         {
             if (i->frame_percent < 100)
             {
@@ -951,20 +982,20 @@ bool Interpreter::compile_file(const char* path)
  {
      ObjFunction* function = new ObjFunction(name);
      function->arity = arity;
-     functions.push_back(function);
+  //   functions.push_back(function);
      return function;
  }
 
 ObjFunction* Interpreter::find_function(const char* name)
 {
-   for (u32 i = 0; i < functions.getSize(); i++)
-   {
-       ObjFunction* function = functions[i];
-       if (strcmp(function->name, name) == 0)
-       {
-           return function;
-       }
-   }
+//    for (u32 i = 0; i < functions.getSize(); i++)
+//    {
+//        ObjFunction* function = functions[i];
+//        if (strcmp(function->name, name) == 0)
+//        {
+//            return function;
+//        }
+//    }
    return nullptr;
 }
 
@@ -979,6 +1010,230 @@ void Interpreter::disassemble()
         current = current->next;
     }
 }
+
+void Interpreter::Error(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    Log(2, format, args);
+    va_end(args);
+    panicMode = true;
+}
+
+void Interpreter::Warning(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    Log(1, format, args);
+    va_end(args);
+}
+
+void Interpreter::Info(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    Log(0, format, args);
+    va_end(args);
+}
+
+ 
+
+bool Interpreter::registerVariable(const char *name, Value value)
+{
+     if (globals.contains(name))
+     {
+        WARNING("Variable %s already defined", name);
+         return false;
+     }
+     globals.insert(name, std::move(value));
+     return true;
+}
+
+bool Interpreter::registerNumber(const char *name, double value)
+{
+     if (globals.contains(name))
+     {
+        WARNING("Variable %s already defined", name);
+         return false;
+     }
+     globals.insert(name, std::move(NUMBER(value)));
+     return true;
+}
+
+bool Interpreter::registerInteger(const char *name, int value)
+{
+     if (globals.contains(name))
+     {
+        WARNING("Variable %s already defined", name);
+         return false;
+     }
+     globals.insert(name, std::move(INTEGER(value)));
+     return true;
+}
+
+bool Interpreter::registerString(const char *name, const char *value)
+{
+     if (globals.contains(name))
+     {
+        WARNING("Variable %s already defined", name);
+         return false;
+     }
+     globals.insert(name, std::move(STRING(value)));
+     return true;
+}
+
+bool Interpreter::registerBoolean(const char *name, bool value)
+{
+     if (globals.contains(name))
+     {
+        WARNING("Variable %s already defined", name);
+         return false;
+     }
+     globals.insert(name, std::move(BOOLEAN(value)));
+     return true;
+}
+
+void Interpreter::push(Value v)
+{
+     main_process->push(std::move(v));
+}
+
+Value Interpreter::pop()
+{
+    return main_process->pop();
+}
+
+Value Interpreter::peek(int offset)
+{
+    return main_process->peek(offset);
+}
+
+Value Interpreter::top()
+{
+    return main_process->top();
+}
+
+long Interpreter::pop_int()
+{
+    Value value = pop();
+    if (IS_NUMBER(value))
+    {
+        double number = AS_NUMBER(value);
+        return (long)number;
+    }
+    Error("Expected number but got :");
+    value.print();
+    return 0;
+}
+
+double Interpreter::pop_double()
+{
+    Value value = pop();
+    if (IS_NUMBER(value))
+    {
+        double number = AS_NUMBER(value);
+        return number;
+    }
+    Error("Expected number but got :");
+    value.print();
+    return 0;
+}
+
+float Interpreter::pop_float()
+{
+    Value value = pop();
+    if (IS_NUMBER(value))
+    {
+        double number = AS_NUMBER(value);
+        return (float)number;
+    }
+    Error("Expected number but got :");
+    value.print();
+    return 0;
+}
+
+long Interpreter::pop_long()
+{
+    Value value = pop();
+    if (IS_NUMBER(value))
+    {
+        double number = AS_NUMBER(value);
+        return (long)number;
+    }
+    Error("Expected number but got :");
+    value.print();
+    return 0;
+}
+
+String Interpreter::pop_string()
+{
+    Value value = pop();
+    if (IS_STRING(value))
+    {
+        ObjString* a = AS_STRING(value);
+        String str(a->data, a->length);
+        return str;
+    }
+    Error("Expected string but got :");
+    value.print();
+    return "";
+}
+
+bool Interpreter::pop_bool()
+{
+    Value value = pop();
+    if (IS_BOOLEAN(value))
+    {
+        return AS_BOOLEAN(value);
+    }
+    Error("Expected bool but got :");
+    value.print();   
+    return false;
+}
+
+bool Interpreter::pop_nil()
+{
+    Value value = pop();
+    if (IS_NIL(value))
+    {
+        return true;
+    }
+    Error("Expected nil but got :");
+    value.print();
+    return false;
+}
+
+void Interpreter::push_int(int value)
+{
+    double number = static_cast<double>(value);
+     push(std::move(NUMBER(number)));
+}
+
+void Interpreter::push_double(double value)
+{
+    return push(std::move(NUMBER(value)));
+}
+
+void Interpreter::push_bool(bool value)
+{
+    return push(std::move(BOOLEAN(value)));
+}
+
+void Interpreter::push_nil()
+{
+    return push(std::move(NIL()));
+}
+
+void Interpreter::push_string(const char *value)
+{
+    return push(std::move(STRING(value)));
+}
+
+void Interpreter::push_string(const String &str)
+{
+    return push(std::move(STRING(str.c_str())));
+}
+
 
 ObjProcess::ObjProcess() 
 {

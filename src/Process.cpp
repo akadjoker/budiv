@@ -132,6 +132,12 @@ void Process::resetStack()
 
     Value Process::peek(int distance) { return stackTop[-1 - distance]; }
 
+Value Process::top()
+{
+    return *stackTop;
+}
+
+
 bool Process::is_alive() const
 {
     return status != STATUS_DEAD && status != STATUS_KILLED;
@@ -513,21 +519,25 @@ bool Process::run( )
             }
             case OP_PRINT:
             {
-                Value count = pop();
-                if (count.type != ValueType::NUMBER)
-                {
-                    runtimeError("In print expected a number.");
-                    return false;
-                }
-                int len = AS_INTEGER(count);
-                int index = len-1;
-                for (int i = 0; i < len; i++)
-                {
-                    Value value = peek(index);
-                    index--;
-                    PRINT_VALUE(value);
-                }
-                popn(len);
+                
+                Value value = pop();
+                PRINT_VALUE(value);
+
+                // Value count = pop();
+                // if (count.type != ValueType::NUMBER)
+                // {
+                //     runtimeError("In print expected a number.");
+                //     return false;
+                // }
+                // int len = AS_INTEGER(count);
+                // int index = len-1;
+                // for (int i = 0; i < len; i++)
+                // {
+                //     Value value = peek(index);
+                //     index--;
+                //     PRINT_VALUE(value);
+                // }
+                // popn(len);
                 
                 printf("\n");
                 break;

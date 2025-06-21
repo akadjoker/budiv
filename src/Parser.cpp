@@ -400,30 +400,30 @@ void Parser::statement()
 void Parser::printStatement()
 {
     // INFO("print statement");
-    // consume(TokenType::LEFT_PAREN, "Expect '(' after 'print'.");
-    // expression();
-    // consume(TokenType::RIGHT_PAREN, "Expect ')' after expression.");
-    // consume(TokenType::SEMICOLON, "Expect ';' after value.");
-    // emitByte(OP_PRINT);
-
-    //slow version but it works
     consume(TokenType::LEFT_PAREN, "Expect '(' after 'print'.");
-    int argCount = 0;
-    if (!check(TokenType::RIGHT_PAREN)) 
-    {
-        do 
-        { 
-            expression();
-            argCount++;
-        } while (match(TokenType::COMMA));
-        emitConstant(NUMBER(argCount));
-    } else 
-    {
-        emitConstant(NUMBER(0));
-    }
-    emitByte(OP_PRINT); 
-    consume(TokenType::RIGHT_PAREN, "Expect ')' after expression(s).");
+    expression();
+    consume(TokenType::RIGHT_PAREN, "Expect ')' after expression.");
     consume(TokenType::SEMICOLON, "Expect ';' after value.");
+    emitByte(OP_PRINT);
+
+    // //slow version but it works
+    // consume(TokenType::LEFT_PAREN, "Expect '(' after 'print'.");
+    // int argCount = 0;
+    // if (!check(TokenType::RIGHT_PAREN)) 
+    // {
+    //     do 
+    //     { 
+    //         expression();
+    //         argCount++;
+    //     } while (match(TokenType::COMMA));
+    //     emitConstant(NUMBER(argCount));
+    // } else 
+    // {
+    //     emitConstant(NUMBER(0));
+    // }
+    // emitByte(OP_PRINT); 
+    // consume(TokenType::RIGHT_PAREN, "Expect ')' after expression(s).");
+    // consume(TokenType::SEMICOLON, "Expect ';' after value.");
 }
 
 void Parser::frameStatement() 

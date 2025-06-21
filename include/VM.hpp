@@ -39,7 +39,7 @@ bool IS_TRUTHY(const Value& value);
 bool MATCH(const Value& value, const Value& with);
 void PRINT_VALUE(const Value& value);
 
-const ObjString* AS_STRING(const Value& value);
+ObjString* AS_STRING(const Value& value);
 double AS_NUMBER(const Value& value);
 int     AS_INTEGER(const Value& value);
 bool    AS_BOOLEAN(const Value& value);
@@ -187,6 +187,12 @@ struct LoopContext
 
 
 typedef Value (*NativeFn)(int argCount, Value* args);
+
+struct NativeReg 
+{
+    const char* name;
+    NativeFn function;
+};
 
 class ObjNative 
 {
@@ -378,11 +384,12 @@ public:
 
     int addLocal(const char* name,size_t len,bool isArg);
     int resolveLocal(const char* name,size_t len);
-    
+
 
     void resetStack();
     void push(Value value);
     Value pop();
+    Value top();
     Value peek(int distance);
     void popn(int n);
 
@@ -419,12 +426,12 @@ class Interpreter {
     s32 exit_value;
     bool priority_dirty;
 
+    bool panicMode;
 
     //blueprints
-    ValueArray<ObjFunction*> functions;
-    ValueArray<ObjNative*> natives;
+
     ValueArray<Process*> processes;
-    ValueArray<ObjProcess*> raw_processes;
+  
 
 
     Parser* parser;
@@ -437,6 +444,8 @@ class Interpreter {
 public:
     Interpreter();
     ~Interpreter();
+
+
     void clear();
     Process* add_process(const char* name, bool root, int32_t priority = 0);
     Process* create_process(const char* name);
@@ -444,7 +453,10 @@ public:
     bool call_process(Process* process, int32_t priority = 0);
 
     
-
+    
+    void Error(const char *format, ...);
+    void Warning(const char *format, ...);
+    void Info(const char *format, ...);
 
     ObjFunction* add_function(const char* name, u8 arity = 0);
     ObjFunction* find_function(const char* name);
@@ -474,4 +486,45 @@ public:
     void disassemble();
 
     void defineNative(const char* name, NativeFn function);
+    void defineNatives(const NativeReg* natives) ;
+
+
+
+    bool registerVariable(const char *name, Value value);
+    bool registerNumber(const char *name, double value);
+    bool registerInteger(const char *name, int value);
+    bool registerString(const char *name, const char *value);
+    bool registerBoolean(const char *name, bool value);
+    bool registerNil(const char *name);
+    bool ContainsVariable(const char *name);
+
+
+    void  push(Value v);
+    Value pop();
+    Value peek(int offset = 0);
+    void  pop(u32 count);
+    Value top();
+
+
+    void push_int(int value);
+    void push_double(double value);
+    void push_float(float value);
+    void push_long(long value);
+    void push_string(const char *str);
+    void push_string(const String &str);
+    void push_bool(bool value);
+    void push_nil();
+
+    bool is_number();
+    bool is_string();
+    bool is_bool();
+    bool is_nil();
+
+    long   pop_int();
+    double pop_double();
+    float  pop_float();
+    long   pop_long();
+    String pop_string();
+    bool   pop_bool();
+    bool   pop_nil();
 };

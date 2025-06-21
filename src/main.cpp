@@ -70,7 +70,16 @@ static Value clockNative(int argCount, Value* args)
   return NUMBER((double)clock() / CLOCKS_PER_SEC);
 }
 
-static Value sayNative(int argCount, Value* args) 
+static Value write_Native(int argCount, Value* args) 
+{
+  for (int i = 0; i < argCount; i++) 
+  {
+    PRINT_VALUE(args[i]);
+  }
+
+  return NIL();
+}
+static Value writeln_Native(int argCount, Value* args) 
 {
   for (int i = 0; i < argCount; i++) 
   {
@@ -89,7 +98,8 @@ int main()
    Interpreter vm;
 
    vm.defineNative("clock", clockNative);
-   vm.defineNative("say", sayNative);
+   vm.defineNative("write", write_Native  );
+   vm.defineNative("writeln", writeln_Native);
 
    if (vm.compile_file("main.bu"))
    {
