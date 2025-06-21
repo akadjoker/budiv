@@ -1,0 +1,3 @@
+/home/djoker/code/cpp/bugame/div/build/CMakeFiles/main.dir
+/home/djoker/code/cpp/bugame/div/build/CMakeFiles/edit_cache.dir
+/home/djoker/code/cpp/bugame/div/build/CMakeFiles/rebuild_cache.dir

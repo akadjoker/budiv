@@ -1,0 +1,33 @@
+
+
+process bala(_x,_y)
+{
+ 
+  var x=_x;
+  var y=_y;
+  
+  while(x<10)
+  {
+    x=x+1;
+    frame;
+  }
+
+  print(x);
+
+  while(y<10)
+  {
+    y=y+1;
+  }
+
+  print(y);
+ 
+ 
+
+
+ 
+}
+
+
+
+
+bala(0,0);

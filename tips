@@ -1,0 +1,395 @@
+#include <cstdint>
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+
+enum ProcessStatus : uint32_t {
+    STATUS_RUNNING = 1,
+    STATUS_SLEEPING = 2,
+    STATUS_FROZEN = 4,
+    STATUS_WAITING = 8,
+    STATUS_PAUSED = 16,
+    STATUS_DEAD = 32,
+    STATUS_KILLED = 64
+};
+
+// Forward declarations
+struct Process;
+struct InstanceManager;
+
+// Function pointer type para execução de processo
+typedef bool (*ProcessExecuteFunc)(Process* process);
+
+struct Process {
+    char name[64];
+    uint32_t process_id;
+    int32_t priority;
+    ProcessStatus status;
+    int32_t frame_percent;
+    ProcessStatus saved_status;
+    int32_t saved_priority;
+    int32_t last_priority;
+    
+    // Linked list pointers
+    Process* next;
+    Process* prev;
+    
+    // Function pointer para execução customizada
+    ProcessExecuteFunc execute_func;
+    
+    // User data simples
+    double locals[16]; // Array fixo para variáveis locais
+    
+    Process() : process_id(0), priority(0), status(STATUS_RUNNING), 
+                frame_percent(0), saved_status(STATUS_RUNNING), 
+                saved_priority(0), last_priority(0), 
+                next(nullptr), prev(nullptr), execute_func(nullptr) {
+        name[0] = '\0';
+        for (int i = 0; i < 16; i++) locals[i] = 0.0;
+    }
+    
+    bool instance_go() {
+        if (execute_func) {
+            return execute_func(this);
+        }
+        
+        // Default behavior
+        printf("  -> %s executing (frame_percent: %d)\n", name, frame_percent);
+        frame_percent += 25;
+        return true;
+    }
+    
+    bool is_alive() const {
+        return status != STATUS_DEAD && status != STATUS_KILLED;
+    }
+    
+    bool should_execute() const {
+        return status == STATUS_RUNNING && frame_percent < 100;
+    }
+};
+
+struct InstanceManager {
+    Process* first_instance;
+    Process** priority_list;
+    uint32_t priority_list_size;
+    uint32_t priority_list_capacity;
+    uint32_t current_priority_index;
+    
+    uint32_t next_process_id;
+    uint32_t current_frame;
+    bool frame_completed;
+    bool must_exit;
+    int32_t exit_value;
+    bool priority_dirty;
+    
+    // Globals simples
+    double globals[32]; // Array fixo para globais
+    
+    InstanceManager() : first_instance(nullptr), priority_list(nullptr),
+                       priority_list_size(0), priority_list_capacity(0),
+                       current_priority_index(0), next_process_id(1),
+                       current_frame(0), frame_completed(false),
+                       must_exit(false), exit_value(0), priority_dirty(false) {
+        
+        // Inicializar priority_list
+        priority_list_capacity = 1000;
+        priority_list = (Process**)malloc(priority_list_capacity * sizeof(Process*));
+        
+        // Inicializar globals
+        for (int i = 0; i < 32; i++) globals[i] = 0.0;
+        globals[0] = 3.14159265359; // pi
+    }
+    
+    ~InstanceManager() {
+        clear();
+        free(priority_list);
+    }
+    
+    void clear() {
+        Process* current = first_instance;
+        while (current) {
+            Process* next = current->next;
+            delete current;
+            current = next;
+        }
+        first_instance = nullptr;
+        priority_list_size = 0;
+        priority_dirty = false;
+    }
+    
+    Process* add_process(const char* name, int32_t priority = 0) {
+        Process* process = new Process();
+        strncpy(process->name, name, 63);
+        process->name[63] = '\0';
+        process->process_id = next_process_id++;
+        process->priority = priority;
+        process->last_priority = priority;
+        
+        // Insert at end of linked list
+        if (!first_instance) {
+            first_instance = process;
+        } else {
+            Process* current = first_instance;
+            while (current->next) {
+                current = current->next;
+            }
+            current->next = process;
+            process->prev = current;
+        }
+        
+        priority_dirty = true;
+        return process;
+    }
+    
+    void rebuild_priority_list() {
+        if (!priority_dirty) return;
+        
+        priority_list_size = 0;
+        
+        // Collect alive processes
+        Process* current = first_instance;
+        while (current) {
+            if (current->is_alive()) {
+                if (priority_list_size >= priority_list_capacity) {
+                    // Resize if needed
+                    priority_list_capacity *= 2;
+                    priority_list = (Process**)realloc(priority_list, 
+                                                      priority_list_capacity * sizeof(Process*));
+                }
+                priority_list[priority_list_size++] = current;
+            }
+            current = current->next;
+        }
+        
+        // Simple bubble sort by priority (good enough for small lists)
+        for (uint32_t i = 0; i < priority_list_size - 1; i++) {
+            for (uint32_t j = 0; j < priority_list_size - i - 1; j++) {
+                if (priority_list[j]->priority < priority_list[j + 1]->priority) {
+                    Process* temp = priority_list[j];
+                    priority_list[j] = priority_list[j + 1];
+                    priority_list[j + 1] = temp;
+                }
+            }
+        }
+        
+        priority_dirty = false;
+    }
+    
+    void instance_reset_iterator_by_priority() {
+        rebuild_priority_list();
+        current_priority_index = 0;
+    }
+    
+    Process* instance_next_by_priority() {
+        while (current_priority_index < priority_list_size) {
+            Process* process = priority_list[current_priority_index++];
+            if (process && process->is_alive()) {
+                return process;
+            }
+        }
+        return nullptr;
+    }
+    
+    int32_t run() {
+        must_exit = false;
+        
+        while (has_alive_processes() && !must_exit) {
+            frame_completed = false;
+            current_frame++;
+            
+            printf("\n=== FRAME %u ===\n", current_frame);
+            
+            // Reset iterator por prioridade
+            instance_reset_iterator_by_priority();
+            Process* i = instance_next_by_priority();
+            uint32_t i_count = 0;
+            
+            // Executa todos os processos que precisam executar neste frame
+            while (i && !must_exit) {
+                if (i->frame_percent < 100) {
+                    ProcessStatus status = i->status;
+                    
+                    if (status == STATUS_RUNNING) {
+                        printf("Executing process: %s (priority: %d)\n", i->name, i->priority);
+                        
+                        // Run instance
+                        if (i->instance_go()) {
+                            i_count++;
+                        }
+                        
+                        if (must_exit) break;
+                    }
+                    else if (status != STATUS_KILLED && status != STATUS_DEAD) {
+                        // Skip sleeping/frozen/waiting processes
+                    }
+                }
+                
+                i = instance_next_by_priority();
+            }
+            
+            // Se nenhum processo executou, o frame está completo
+            if (i_count == 0) {
+                frame_completed = true;
+                
+                // Update internal vars
+                Process* current = first_instance;
+                while (current) {
+                    current->saved_status = current->status;
+                    
+                    // Decrease frame_percent for running/dead/killed processes
+                    if (current->status == STATUS_DEAD ||
+                        current->status == STATUS_KILLED ||
+                        current->status == STATUS_RUNNING) {
+                        current->frame_percent -= 100;
+                    }
+                    
+                    // Check priority changes
+                    if (current->last_priority != current->priority) {
+                        current->saved_priority = current->priority;
+                        current->last_priority = current->priority;
+                        priority_dirty = true;
+                    }
+                    
+                    current = current->next;
+                }
+                
+                // Remove dead processes
+                cleanup_dead_processes();
+                
+                printf("Frame completed!\n");
+            }
+        }
+        
+        return exit_value;
+    }
+    
+    void cleanup_dead_processes() {
+        Process* current = first_instance;
+        while (current) {
+            Process* next = current->next;
+            
+            if (current->status == STATUS_DEAD) {
+                // Remove from linked list
+                if (current->prev) {
+                    current->prev->next = current->next;
+                } else {
+                    first_instance = current->next;
+                }
+                
+                if (current->next) {
+                    current->next->prev = current->prev;
+                }
+                
+                printf("Process %s removed (dead)\n", current->name);
+                delete current;
+                priority_dirty = true;
+            }
+            
+            current = next;
+        }
+    }
+    
+    bool has_alive_processes() const {
+        Process* current = first_instance;
+        while (current) {
+            if (current->is_alive()) {
+                return true;
+            }
+            current = current->next;
+        }
+        return false;
+    }
+    
+    // Utility methods
+    void kill_process(const char* name) {
+        Process* current = first_instance;
+        while (current) {
+            if (strcmp(current->name, name) == 0) {
+                current->status = STATUS_KILLED;
+                break;
+            }
+            current = current->next;
+        }
+    }
+    
+    Process* find_process(const char* name) {
+        Process* current = first_instance;
+        while (current) {
+            if (strcmp(current->name, name) == 0) {
+                return current;
+            }
+            current = current->next;
+        }
+        return nullptr;
+    }
+    
+    uint32_t get_process_count() const {
+        uint32_t count = 0;
+        Process* current = first_instance;
+        while (current) {
+            if (current->is_alive()) {
+                count++;
+            }
+            current = current->next;
+        }
+        return count;
+    }
+    
+    void request_exit(int32_t value = 0) {
+        must_exit = true;
+        exit_value = value;
+    }
+};
+
+// Example usage functions
+bool main_loop_func(Process* p) {
+    printf("  -> MainLoop working...\n");
+    p->frame_percent += 50;
+    
+    static int counter = 0;
+    if (++counter > 10) {
+        p->status = STATUS_DEAD;
+    }
+    return true;
+}
+
+bool background_task_func(Process* p) {
+    printf("  -> Background task tick\n");
+    p->frame_percent += 30;
+    return true;
+}
+
+bool slow_process_func(Process* p) {
+    printf("  -> Slow process...\n");
+    p->frame_percent += 20;
+    
+    static int sleep_counter = 0;
+    if (++sleep_counter % 3 == 0) {
+        p->status = STATUS_SLEEPING;
+        printf("    (going to sleep)\n");
+    }
+    return true;
+}
+
+int main() {
+    InstanceManager manager;
+    
+    // Add processes
+    Process* p1 = manager.add_process("MainLoop", 100);
+    Process* p2 = manager.add_process("BackgroundTask", 50);
+    Process* p3 = manager.add_process("SlowProcess", 10);
+    
+    // Set custom behaviors
+    p1->execute_func = main_loop_func;
+    p2->execute_func = background_task_func;
+    p3->execute_func = slow_process_func;
+    
+    printf("Starting engine with %u processes...\n", manager.get_process_count());
+    
+    // Run the engine
+    int result = manager.run();
+    
+    printf("\nEngine finished with exit code: %d\n", result);
+    
+    return 0;
+}
