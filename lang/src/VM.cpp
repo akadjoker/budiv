@@ -327,9 +327,8 @@ void Value::print()
 
 ObjFunction::ObjFunction():  arity(0)
 {
-    size_t len = strlen("Function");
-    strncpy(name, "Function", len);
-    name[len] = '\0';
+    memcpy(name, "function", 7);
+    name[7] = '\0';
 }
 ObjFunction::ObjFunction(const String &n): arity(0)
 {
@@ -340,7 +339,7 @@ ObjFunction::ObjFunction(const String &n): arity(0)
 ObjFunction::ObjFunction(const char *n):  arity(0)
 {
     size_t len = strlen(n);
-    strncpy(name, n, len);
+    memccpy(name, n, '\0', len);
     name[len] = '\0';
 }
 
@@ -355,31 +354,29 @@ ObjProcess* Interpreter::add_raw_process(const char* name)
 Interpreter::Interpreter()
 {
     first_instance = nullptr;
-    priority_list = nullptr;
-    priority_list_size = 0;
-    priority_list_capacity = 0;
-    current_priority_index = 0;
+    last_instance = nullptr;
+ 
     next_process_id = 1;
     current_frame = 0;
     frame_completed = false;
     must_exit = false;
     exit_value = 0;
-    priority_dirty = false;
-
-    priority_list_capacity = 32;
-    priority_list = (Process**)realloc(priority_list, priority_list_capacity * sizeof(Process*));
+    first_instance = nullptr;
+    last_instance = nullptr;
     parser = new Parser(this);
     main_process = add_process("_main_", true, 0);
+    first_instance = main_process;
     panicMode = false;
     
 }
 
 Interpreter::~Interpreter()
 {
-    main_process = nullptr;
-    delete parser;
     clear();
-    delete first_instance;
+   // main_process = nullptr;
+    delete parser;
+   // delete first_instance;
+    delete main_process;
 
     // for (u32 i = 0; i < functions.getSize (); i++)
     // {
@@ -428,7 +425,7 @@ Interpreter::~Interpreter()
     }
     globals.clear();
 
-    free(priority_list);
+ 
 }
 
 void Interpreter::clear()
@@ -445,10 +442,9 @@ void Interpreter::clear()
         delete current;
         current = next;
     }
-    first_instance = nullptr;
-    priority_list_size = 0;
-    priority_dirty = false;
+    first_instance = nullptr;   
     main_process =      add_process("_main_", true, 0);
+    first_instance = main_process;
     panicMode = false;
 
 }
@@ -470,125 +466,41 @@ void Interpreter::clear()
  Process* Interpreter::create_process(const char* name)
 {
     Process* process = new Process(this, true);
-    size_t len = strlen(name);
-    strncpy(process->name, name, len);
-    process->name[len] = '\0';
+    memccpy(process->name, name, '\0', strlen(name));
     processes.push_back(process);
     return process;
 }
 
-bool Interpreter::call_process(Process* process, int32_t priority)
-{
-    process->priority = priority;
-    process->last_priority = priority;
-
-    // Insert at end of linked list
-    if (!first_instance)
-    {
-        first_instance = process;
-    }
-    else
-    {
-        Process* current = first_instance;
-        while (current->next)
-        {
-            current = current->next;
-        }
-        current->next = process;
-        process->prev = current;
-    }
-
-    priority_dirty = true;
-    return true;
-}
 
 Process* Interpreter::add_process(const char* name, bool root,int32_t priority)
 {
     Process* process = new Process(this, root);
-    size_t len = strlen(name);
-    strncpy(process->name, name, len);
-    process->name[len] = '\0';
+    memccpy(process->name, name, '\0', strlen(name));
     process->priority = priority;
-    process->last_priority = priority;
+ 
+    process->frame_timer = 0.0;
+    process->frame_interval = 1.0 / 60.0; // Default to 60 FPS
+    process->priority = priority;
 
-    // Insert at end of linked list
-    if (!first_instance)
-    {
+    process->next = nullptr;
+    process->prev = nullptr;
+
+    
+  if (!first_instance) 
+  {
         first_instance = process;
-    }
-    else
+        last_instance = process;
+    } else 
     {
-        Process* current = first_instance;
-        while (current->next)
-        {
-            current = current->next;
-        }
-        current->next = process;
-        process->prev = current;
+        last_instance->next = process;
+        process->prev = last_instance;
+        last_instance = process;
     }
 
-    priority_dirty = true;
     return process;
 }
 
-void Interpreter::rebuild_priority_list()
-{
-    if (!priority_dirty) return;
-
-    priority_list_size = 0;
-
-    // Collect alive processes
-    Process* current = first_instance;
-    while (current)
-    {
-        if (current->is_alive())
-        {
-            if (priority_list_size >= priority_list_capacity)
-            {
-                // Resize if needed
-                priority_list_capacity *= 2;
-                priority_list = (Process**)realloc(priority_list, priority_list_capacity * sizeof(Process*));
-            }
-            priority_list[priority_list_size++] = current;
-        }
-        current = current->next;
-    }
-
-    // Simple bubble sort by priority (good enough for small lists)
-    for (uint32_t i = 0; i < priority_list_size - 1; i++)
-    {
-        for (uint32_t j = 0; j < priority_list_size - i - 1; j++)
-        {
-            if (priority_list[j]->priority < priority_list[j + 1]->priority)
-            {
-                Process* temp = priority_list[j];
-                priority_list[j] = priority_list[j + 1];
-                priority_list[j + 1] = temp;
-            }
-        }
-    }
-
-    priority_dirty = false;
-}
-
-void Interpreter::instance_reset_iterator_by_priority()
-{
-    rebuild_priority_list();
-    current_priority_index = 0;
-}
-
-Process* Interpreter::instance_next_by_priority()
-{
-    while (current_priority_index < priority_list_size)
-    {
-        Process* process = priority_list[current_priority_index++];
-        if (process && process->is_alive())
-        {
-            return process;
-        }
-    }
-    return nullptr;
-}
+ 
 
 void Interpreter::request_exit(s32 value)
 {
@@ -609,50 +521,6 @@ u32 Interpreter::instance_count()
         current = current->next;
     }
     return count;
-}
-
-void Interpreter::cleanup_dead_processes()
-{
-    Process* current = first_instance;
-    while (current)
-    {
-        Process* next = current->next;
-
-        if (current->status == STATUS_DEAD)
-        {
-            // Remove from linked list
-            if (current->prev)
-            {
-                current->prev->next = current->next;
-            }
-            else
-            {
-                first_instance = current->next;
-            }
-
-            if (current->next)
-            {
-                current->next->prev = current->prev;
-            }
-
-            //printf("Process %s removed (dead)\n", current->name);
-            delete current;
-            priority_dirty = true;
-        } else
-        {
-          //    if (!current->root)
-            {
-            //bool still_running = current->run();
-            double x = current->stack[ID_X].number;
-            double y = current->stack[ID_Y].number;
-            double angle = current->stack[ID_ANGLE].number;
-            DrawCircle(x, y, 5, WHITE);
-         
-            }
-        }
-
-        current = next;
-    }
 }
 
 
@@ -773,132 +641,9 @@ void Interpreter::defineNatives(const NativeReg* natives)
     }
 }
 
-u32 Interpreter::run()
-{
-    must_exit = false;
-    
-
-    // if  (!has_alive_processes() && (must_exit || panicMode) ) 
-    // {
-    //     return exit_value;
-    // }
-
-    //while  (has_alive_processes() && (!must_exit || !panicMode)  && !WindowShouldClose()) 
-    while  ( (!must_exit || !panicMode)  && !WindowShouldClose()) 
-    {
-
-        BeginDrawing();
-        ClearBackground(BLACK);
-
-
-        frame_completed = false;
-        current_frame++;
-
-      //  printf("\n=== FRAME %u ===\n", current_frame);
-
-       instance_reset_iterator_by_priority();
-       Process* i = instance_next_by_priority();
-       uint32_t i_count = 0;
-
-       while (i && !must_exit && !panicMode)
-        {
-            if (i->frame_percent < 100)
-            {
-                ProcessStatus status = i->status;
-
-              
-                if (status == STATUS_RUNNING)
-                {
-                 //   printf("Executing process: %s (priority: %d)\n", i->name, i->priority);
-
-        
-                    bool still_running = i->run();
-                    
-                    if (still_running && i->status == STATUS_RUNNING)
-                    {
-                      
-                        if (!i->root)
-                        {
-
-                            // double x = i->stack[ID_X].number;
-                            // double y = i->stack[ID_Y].number;
-                            // double angle = i->stack[ID_ANGLE].number;
-
-                            // DrawCircle(x, y, 5, WHITE);
-                          
-                            //INFO("Process %s still running (id: %d) x: %f, y: %f, angle: %f\n", i->name, (int)i->id, x, y, angle);
-                        }
-
-
-
-                        i_count++;
-                    }
-                    else
-                    {
-                        // Processo morreu/foi morto
-                       // WARNING("Process %s terminated (status: %d)\n", i->name, (int)i->status);
-                    }
-
-                    if (must_exit) break;
-                }
-                else if (status == STATUS_DEAD || status == STATUS_KILLED)
-                {
-                    // Processo já morreu, não executar
-                    WARNING("Process %s is dead/killed, skipping\n", i->name);
-                }
-            
-               i->frame_percent -= 100;
-            }
-            i = instance_next_by_priority();
-        }
-
-        cleanup_dead_processes();
-
-
-       //  DrawCircle(GetMouseX(), GetMouseY(),  5, RED);
-
-        DrawFPS(10, 10);
-        EndDrawing();
 
 
  
-        // if (i_count == 0)
-        // {
-        //     frame_completed = true;
-            
-        //     // Update processes
-        //     Process* current = first_instance;
-        //     while (current)
-        //     {
-        //         current->saved_status = current->status;
-
-        //         if (current->status == STATUS_DEAD
-        //             || current->status == STATUS_KILLED
-        //             || current->status == STATUS_RUNNING)
-        //         {
-        //             current->frame_percent -= 100;
-        //         }
-
-        //         if (current->last_priority != current->priority)
-        //         {
-        //             current->saved_priority = current->priority;
-        //             current->last_priority = current->priority;
-        //             priority_dirty = true;
-        //         }
-
-        //         current = current->next;
-        //     }
-
-        //    // cleanup_dead_processes();
-        //   //  printf("Frame completed!\n");
-        // }
-    }
-
-  
-
-
-    return exit_value;
-}
 bool Interpreter::define(const char* name, Value value) 
 {
     if (globals.contains(name))
@@ -937,97 +682,104 @@ bool Interpreter::compile(const char* source)
 }
 bool Interpreter::compile_file(const char* path)
  {
-    clear();
+  //  clear();
     if (parser->lexer->LoadFromFile(path))
     {
         return parser->compile();
     }
     return false;
 }
-// u32 Interpreter::run()
-// {
-//     must_exit = false;
 
-//     while (has_alive_processes() && !must_exit)
-//     {
-//         frame_completed = false;
-//         current_frame++;
+void Interpreter::remove_process_from_list(Process* process)
+{
+    if (!process) return;
+    
+    if (process->prev)
+        process->prev->next = process->next;
+    else
+        first_instance = process->next;  
+        
+    if (process->next)
+        process->next->prev = process->prev;
+    else
+        last_instance = process->prev;  
+    
+    delete process;
+}
 
-//         printf("\n=== FRAME %u ===\n", current_frame);
+ 
 
-//         // Reset iterator por prioridade
-//         instance_reset_iterator_by_priority();
-//         Process* i = instance_next_by_priority();
-//         uint32_t i_count = 0;
-
-//         // Executa todos os processos que precisam executar neste frame
-//         while (i && !must_exit)
-//         {
-//             if (i->frame_percent < 100)
-//             {
-//                 ProcessStatus status = i->status;
-
-//                 if (status == STATUS_RUNNING)
-//                 {
-//                     printf("Executing process: %s (priority: %d)\n", i->name,i->priority);
-
-//                     // Run instance
-//                     if (i->run())
-//                     {
-//                         i_count++;
-//                     }
-
-//                     if (must_exit) break;
-//                 }
-//                 else if (status != STATUS_KILLED && status != STATUS_DEAD)
-//                 {
-//                     // Skip sleeping/frozen/waiting processes
-//                 }
-//             }
-
-//             i = instance_next_by_priority();
-//         }
-
-//         // Se nenhum processo executou, o frame está completo
-//         if (i_count == 0)
-//         {
-//             frame_completed = true;
-
-//             // Update internal vars
-//             Process* current = first_instance;
-//             while (current)
-//             {
-//                 current->saved_status = current->status;
-
-//                 // Decrease frame_percent for running/dead/killed processes
-//                 if (current->status == STATUS_DEAD
-//                     || current->status == STATUS_KILLED
-//                     || current->status == STATUS_RUNNING)
-//                 {
-//                     current->frame_percent -= 100;
-//                 }
-
-//                 // Check priority changes
-//                 if (current->last_priority != current->priority)
-//                 {
-//                     current->saved_priority = current->priority;
-//                     current->last_priority = current->priority;
-//                     priority_dirty = true;
-//                 }
-
-//                 current = current->next;
-//             }
-
-//             // Remove dead processes
-//             cleanup_dead_processes();
-
-//             printf("Frame completed!\n");
-//         }
-//     }
-
-//     return exit_value;
-// }
-
+u32 Interpreter::run()
+{
+    must_exit = false;
+    
+    while ((!must_exit || !panicMode) && !WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(BLACK);
+        
+        double deltaTime = GetFrameTime();
+        current_frame++;
+        
+ 
+        Process* i = first_instance;
+        uint32_t i_count = 0;
+        uint32_t dead_count = 0;
+        
+        while (i)
+        {
+            Process* next = i->next; // Safe iteration
+            ProcessStatus status = i->status;
+            
+            if (status == STATUS_RUNNING)
+            {
+                i->frame_timer += deltaTime;
+                
+                if (i->frame_timer >= i->frame_interval)
+                {
+                    bool still_running = i->run();
+                    
+                    if (still_running && i->status == STATUS_RUNNING)
+                    {
+                        i_count++;
+                        i->frame_timer -= i->frame_interval; // Maintain timing precision
+                    }
+                }
+                else
+                {
+                    i_count++; // Count waiting processes as active
+                }
+                
+                // Render active, non-root processes
+                if (i->status == STATUS_RUNNING && !i->root)
+                {
+                    double x = i->stack[ID_X].number;
+                    double y = i->stack[ID_Y].number;
+                    DrawCircle(x, y, 5, WHITE);
+                    // Optional: DrawText(TextFormat("FPS: %.0f", 1.0/i->frame_interval), x, y-20, 12, GRAY);
+                }
+            }
+            else if (status == STATUS_DEAD || status == STATUS_KILLED)
+            {
+                dead_count++;
+                remove_process_from_list(i); // Updates last_instance if needed
+            }
+            
+            if (must_exit) break;
+            
+            i = next;
+        }
+        
+        DrawFPS(10, 10);
+        DrawText(TextFormat("Processes: %d", i_count), 10, 30, 20, WHITE);
+        DrawText(TextFormat("Dead cleaned: %d", dead_count), 10, 50, 20, RED);
+        
+        
+        EndDrawing();
+    }
+    
+    return exit_value;
+}
  ObjFunction*  Interpreter::add_function(const char* name, u8 arity)
  {
      ObjFunction* function = new ObjFunction(name);
@@ -1288,9 +1040,9 @@ void Interpreter::push_string(const String &str)
 ObjProcess::ObjProcess() 
 {
     
-    size_t len = strlen("Process");
-    strncpy(name, "Process", len);
-    name[len] = '\0';
+    
+    strncpy(name, "Process", sizeof(name) - 1);
+    name[sizeof(name) - 1] = '\0'; 
     process = nullptr;
     function = nullptr;
 }
@@ -1300,8 +1052,7 @@ ObjProcess::ObjProcess(const String& n)
 
      
     size_t len = n.length();
-    strncpy(name, n.c_str(), len);
-    name[len] = '\0';
+    memccpy(name, n.c_str(), '\0', len);
     process = nullptr;
     function = nullptr;
 }
@@ -1310,8 +1061,8 @@ ObjProcess::ObjProcess(const char* n)
 {
     
     size_t len = strlen(n);
-    strncpy(name, n, len);
-    name[len] = '\0';
+    memccpy(name, n, '\0', len);
+
     process = nullptr;
     function = nullptr;
 }

@@ -6,6 +6,8 @@
 //#include "TestRai.hpp"
 //#include "TesteMap.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <raylib.h>
 
 #include "Config.hpp"
@@ -14,6 +16,7 @@
 #include "Lexer.hpp"
 #include "Parser.hpp"
 extern GarbageCollector GC;
+
 
 
 
@@ -189,6 +192,67 @@ static Value darw_text_Native(int argCount, Value* args)
   return NIL();
 }
 
+// Random number generator (returns [0,1))
+Value rand_native(int argCount, Value* args) {
+    return NUMBER(static_cast<double>(std::rand()) / RAND_MAX);
+}
+
+#include <cstdlib>
+
+// Returns a double in [min, max]
+Value random_native(int argCount, Value* args) 
+{
+    if (argCount != 2 || !IS_NUMBER(args[0]) || !IS_NUMBER(args[1]))
+        return NIL();
+
+    double min = AS_NUMBER(args[0]);
+    double max = AS_NUMBER(args[1]);
+
+    if (min > max) 
+    {
+        double temp = min;
+        min = max;
+        max = temp;
+    }
+
+    // Generate a double in [0, 1)
+    double r = (double)std::rand() / ((double)RAND_MAX + 1.0);
+
+    // Scale to [min, max]
+    double result = min + r * (max - min);
+
+    return NUMBER(result);
+}
+
+
+// Absolute value
+Value abs_native(int argCount, Value* args) {
+    if (argCount != 1 || !IS_NUMBER(args[0])) return NIL();
+    return NUMBER(std::fabs(AS_NUMBER(args[0])));
+}
+
+// Sine function (radians)
+Value sin_native(int argCount, Value* args) {
+    if (argCount != 1 || !IS_NUMBER(args[0])) return NIL();
+    return NUMBER(std::sin(AS_NUMBER(args[0])));
+}
+
+// Cosine function (radians)
+Value cos_native(int argCount, Value* args) {
+    if (argCount != 1 || !IS_NUMBER(args[0])) return NIL();
+    return NUMBER(std::cos(AS_NUMBER(args[0])));
+}
+
+// Tangent function (radians)
+Value tan_native(int argCount, Value* args) {
+    if (argCount != 1 || !IS_NUMBER(args[0])) return NIL();
+    return NUMBER(std::tan(AS_NUMBER(args[0])));
+}
+
+
+
+
+
 
 int main()
 {
@@ -200,6 +264,14 @@ int main()
    vm.defineNative("clock", clockNative);
    vm.defineNative("write", write_Native  );
    vm.defineNative("writeln", writeln_Native);
+
+
+   vm.defineNative("rand", rand_native);
+   vm.defineNative("random", random_native);
+   vm.defineNative("abs", abs_native);
+   vm.defineNative("sin", sin_native);
+   vm.defineNative("cos", cos_native);
+   vm.defineNative("tan", tan_native);
 
    vm.defineNative("key_down", key_down_Native);
    vm.defineNative("key_pressed", key_pressed_Native);
@@ -225,7 +297,7 @@ int main()
   const int screenHeight = 450;
 
   InitWindow(screenWidth, screenHeight, "BuEngine");
-  //SetTargetFPS(60);
+  SetTargetFPS(60);
   bool done = false;
 
 

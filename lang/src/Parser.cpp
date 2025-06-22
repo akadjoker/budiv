@@ -881,13 +881,13 @@ void Parser::procDeclaration()
     
     
     u32 nameIndex = vm->addConstant(STRING(name.c_str()));
-    current_process = vm->create_process(previous.lexeme.c_str());
+    current_process = vm->create_process(name.c_str());
     current_function = current_process->function;
     current_process->addLocal("x");
     current_process->addLocal("y");
     current_process->addLocal("angle");
 
-   // beginScope();
+   beginScope();
 
 
     // current_process->addLocal("y", 1, true);
@@ -946,7 +946,7 @@ void Parser::procDeclaration()
 
 
 
-    //endScope();
+    endScope();
 
  
     

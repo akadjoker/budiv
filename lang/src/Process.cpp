@@ -20,8 +20,7 @@ Process::Process(    Interpreter* interpreter,bool isRoot)
     status = STATUS_RUNNING;
     frame_percent = 0;
     saved_status = status;
-    saved_priority = 0;
-    last_priority = 0;
+ 
     next = nullptr;
     prev = nullptr;
     frameCount = 0;
@@ -30,6 +29,9 @@ Process::Process(    Interpreter* interpreter,bool isRoot)
     defineLocals = 0;
     stackTop = &stack[0];
     function = nullptr;
+    frame_timer = 0.0;     
+    frame_interval = 1.0/60.0; 
+    frame_speed_multiplier = 1.0; 
     root = isRoot;
     if (isRoot)
     {
@@ -41,7 +43,7 @@ Process::Process(    Interpreter* interpreter,bool isRoot)
 Process::~Process()
 {
   //  INFO("deleting process: %s", name);
-    interpreter=nullptr;
+ 
     if (function != nullptr && root) 
     {
         delete function;
@@ -51,6 +53,23 @@ Process::~Process()
 
 
 
+}
+
+void Process::setFrameSpeed(double speed_multiplier)
+{
+    // speed_multiplier: 1.0 = normal, 2.0 = duplo, 0.5 = metade
+    frame_speed_multiplier = speed_multiplier;
+    
+    // Recalcular intervalo baseado na velocidade atual
+    double base_fps = 60.0;
+    double adjusted_fps = base_fps * speed_multiplier;
+    frame_interval = 1.0 / adjusted_fps;
+}
+
+ 
+void Process::pauseForSeconds(double seconds)
+{
+    frame_timer = -seconds; // Timer negativo = pausa
 }
 
 
@@ -459,7 +478,7 @@ bool Process::run( )
     }
 
 
-//    for (;;) 
+   for (;;) 
     {
     
     CallFrame* frame = &frames[frameCount - 1];
@@ -620,7 +639,7 @@ bool Process::run( )
                         Value result = native(argCount, stackTop - argCount);
                         stackTop -= argCount + 1;
                         push(result);
-                        return true;
+                     //   return true;
 
                 } 
                 else if (IS_PROCESS(value))
@@ -651,9 +670,9 @@ bool Process::run( )
                     
 
                    // disassembleCode(&process->process->function->chunk, process->name);
-                    frame->slots = stackTop - argCount - 1;
+                   // frame->slots = stackTop - argCount - 1;
        
-                   return true;
+                  // return true;
                 }
  
     
@@ -668,15 +687,29 @@ bool Process::run( )
             case OP_FRAME:
             {
 
-                Value percent = pop();
-                frame_percent += AS_NUMBER(percent);
-               // INFO("Frame: %f", percent.number);
-                status = STATUS_RUNNING;
-
- 
-
-                return true;
+       
+                 Value frameValue = pop();
+                double frame_param = AS_NUMBER(frameValue);
                 
+                // Interpretar o parâmetro frame():
+                // frame(100) = velocidade normal (60fps)
+                // frame(50)  = metade da velocidade (30fps)  
+                // frame(200) = velocidade dupla (120fps)
+                // frame(1)   = muito lento (0.6fps)
+      
+                double base_fps = 60.0;  
+                double target_fps = (frame_param / 100.0) * base_fps;
+                
+      
+                if (target_fps <= 0.0) target_fps = 0.1;
+                
+                frame_interval = 1.0 / target_fps;
+                frame_timer = 0.0; // Reset timer
+                
+                status = STATUS_RUNNING;
+                goto break_all;
+
+                // return true; 
             }
             case OP_ADD:
             {
@@ -1000,6 +1033,8 @@ bool Process::run( )
     
     }
  
+     break_all:
+        return status == STATUS_RUNNING;
     
     //INFO("Process '%s' running", name);
 

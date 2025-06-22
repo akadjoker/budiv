@@ -1,44 +1,81 @@
  
 process bala(_x,_y)
 {
-   x=_x;
-   y=_y;
+    x=_x;
+    y=_y;
+    var vx = random(-10,10);
+    var vy = random(-5,10);
+    var gravity = 0.5;
+    var life=random(50,100);
+    
 
   loop
   {
 
-       x=x+5;
+       x=x+vx;
+       y=y+vy;
+
+       vy = vy + gravity; 
+       life = life -1;
+       if(life<=0)
+       {
+        break;
+       }
  
 
-      if(x>800)
-      {
-        break;
-      }
-    
-  
-    frame(100);
+        if (x <= 5 or x >= 795)
+        {
+            vx = -vx * 0.8; 
+            x = x + vx; 
+        }
+        
+        if (y >= 445)
+        {
+            vy = -vy * 0.8;
+            y = 445;
+        }
+        frame(120);
 
   }
- // print("by by");
+ 
 }
+
+ 
+
 
 process main()
 {
-  x=-1;
-  y=-1;
+   
+   var spawn_rate = 100;
+  
+    var i=0;
+
 
   loop 
   {
-     if (key_down(257))
-     {
-      break;
-     }
+
+   
      if (mouse_down(0))
      {
 
-        bala(mouse_x(),mouse_y());
+        i=0;
+        while(i<10)
+        {
+              bala(mouse_x(),mouse_y());
+              i=i+1;
+        }
+       
      }
-     draw_circle(mouse_x(),mouse_y(),5);
+
+
+
+    
+        
+         
+            
+
+
+
      frame;
   }
   print("By!By! main");

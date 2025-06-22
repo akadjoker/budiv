@@ -1,3 +1,5 @@
+// #include <vector>
+// #include <algorithm>
 
 #include "String.hpp"
 #include "Chunk.hpp"
@@ -369,6 +371,10 @@ private:
     friend class Parser;
     Interpreter* interpreter;
 
+    double frame_timer;
+    double frame_interval;
+    double frame_speed_multiplier;
+
 public:
  
     char name[64];
@@ -377,8 +383,7 @@ public:
     ProcessStatus status;
     s32 frame_percent;
     ProcessStatus saved_status;
-    s32 saved_priority;
-    s32 last_priority;
+ 
     ObjFunction* function;
     bool root;
 
@@ -410,6 +415,8 @@ public:
     ~Process();
 
     bool run();
+    void setFrameSpeed(double speed_multiplier);
+    void pauseForSeconds(double seconds);
 
     void disassemble();
     bool isEmpty();
@@ -419,18 +426,16 @@ public:
 class Interpreter {
 
     Process* first_instance;
-    Process** priority_list;
+    Process* last_instance;
+ 
     Process* main_process; 
-    u32 priority_list_size;
-    u32 priority_list_capacity;
-    u32 current_priority_index;
-
+ 
     u32 next_process_id;
     u32 current_frame;
     bool frame_completed;
     bool must_exit;
     s32 exit_value;
-    bool priority_dirty;
+ 
 
     bool panicMode;
 
@@ -439,6 +444,10 @@ class Interpreter {
     ValueArray<Process*> processes;
     ValueArray<ObjProcess*> raw_processes;
   
+ 
+    
+    float cleanup_timer = 0.0f;
+    const float CLEANUP_INTERVAL = 2.0f; // Limpa a cada 2 segundos
 
 
     Parser* parser;
@@ -448,6 +457,8 @@ class Interpreter {
     friend class Process;
     
     ObjProcess* add_raw_process(const char* name);
+ 
+
 public:
     Interpreter();
     ~Interpreter();
@@ -467,14 +478,13 @@ public:
 
     ObjFunction* add_function(const char* name, u8 arity = 0);
     ObjFunction* find_function(const char* name);
-    void rebuild_priority_list();
-    void instance_reset_iterator_by_priority();
-    Process* instance_next_by_priority();
+   
     u32 instance_count();
-    void cleanup_dead_processes();
+ 
     bool has_alive_processes() const;
     bool kill_process(const char* name);
     bool kill_process(u32 pid);
+    void remove_process_from_list(Process* process);
     Process* find_process(const char* name);
     Process* find_process(u32 pid);
     void request_exit(s32 value = 0);
