@@ -7,7 +7,7 @@ GarbageCollector GC;
 
 void Value::cleanup()
 {
-   if (type == ValueType::OBJ && string)
+   if (type == ValueType::STRING && string)
    {
        delete []string;
        string = nullptr;
@@ -30,24 +30,37 @@ Value Value::clone() const
     return v;
 }
 
-ObjString::ObjString(const char* str): GCObject(ObjType::STRING)
+ObjString::ObjString():GCObject(ObjType::STRING) 
+{
+    length = 0;
+    data = nullptr;
+}
+
+ObjString::ObjString(const char* str) :GCObject(ObjType::STRING)
 {
     length = strlen(str);
     data = new char[length + 1];
-    for (int i = 0; i <= length; i++)
-    {
-        data[i] = str[i];
-    }
+    strcpy(data, str);
+    data[length] = '\0';
 }
 
-ObjString::ObjString(int value): GCObject(ObjType::STRING)
+ObjString::ObjString(const char* str, size_t length) :GCObject(ObjType::STRING)
+{
+    this->length = length;
+    data = new char[length + 1];
+    strcpy(data, str);
+    data[length] = '\0';
+
+}
+
+ObjString::ObjString(int value) :GCObject(ObjType::STRING)
 {
     length = snprintf(nullptr, 0, "%d", value);
     data = new char[length + 1];
     snprintf(data, length + 1, "%d", value);
 }
 
-ObjString::ObjString(double value): GCObject(ObjType::STRING)
+ObjString::ObjString(double value) :GCObject(ObjType::STRING)
 {
     length = snprintf(nullptr, 0, "%f", value);
     data = new char[length + 1];
@@ -56,7 +69,8 @@ ObjString::ObjString(double value): GCObject(ObjType::STRING)
 
 ObjString::~ObjString()
 {
-    //   INFO("deleting string: %s", data);
+   //INFO("deleting string: %s", data);
+    if (!data) return;
     delete[] data;
 }
 
@@ -68,6 +82,10 @@ GarbageCollector::GarbageCollector()
 GarbageCollector::~GarbageCollector()
 {
     INFO("deleting garbage collector");
+    for(u32 i = 0; i < stringPool.size(); i++)
+    {
+        delete stringPool[i];
+    }
 
     while (head)
     {
@@ -171,6 +189,20 @@ int GarbageCollector::countObjects()
         current = current->next;
     }
     return count;
+}
+
+ObjString* GarbageCollector::newString(const String& str) 
+{
+    ObjString* string = new ObjString(str.c_str(), str.length());
+    stringPool.push_back(string);
+    return string;
+}
+
+ObjString* GarbageCollector::newString(const char* str) 
+{ 
+    ObjString* string = new ObjString(str);
+  //  stringPool.push_back(string);
+    return string;
 }
 
 
@@ -286,7 +318,15 @@ bool MATCH(const Value& value, const Value& with)
 Value STRING(const char* value)
 {
     Value v;
-    v.string = GC.allocate<ObjString>(value);
+    v.string = GC.allocate<ObjString>(value); // <ObjString>(value>
+    v.type = ValueType::STRING;
+    return v;
+}
+
+Value SHARED_STRING(const char* value)
+{
+    Value v;
+    v.string = GC.newString(value);
     v.type = ValueType::STRING;
     return v;
 }
@@ -355,6 +395,8 @@ Interpreter::Interpreter()
 {
     first_instance = nullptr;
     last_instance = nullptr;
+
+    queu_processes.reserve(512);
  
     next_process_id = 1;
     current_frame = 0;
@@ -377,6 +419,15 @@ Interpreter::~Interpreter()
     delete parser;
    // delete first_instance;
     delete main_process;
+
+    if (queu_processes.getSize () > 0)
+    {
+        for (u32 i = 0; i < queu_processes.getSize (); i++)
+        {
+            delete queu_processes[i];
+        }
+        queu_processes.clear();
+    }
 
     // for (u32 i = 0; i < functions.getSize (); i++)
     // {
@@ -472,7 +523,25 @@ void Interpreter::clear()
 }
 
 
-Process* Interpreter::add_process(const char* name, bool root,int32_t priority)
+Process* Interpreter::queue_process(const char* name,   int32_t priority)
+{
+    Process* process = new Process(this, false);
+    memccpy(process->name, name, '\0', strlen(name));
+    process->priority = priority;
+ 
+    process->frame_timer = 0.0;
+    process->frame_interval = 1.0 / 60.0; // Default to 60 FPS
+    process->priority = priority;
+
+    process->next = nullptr;
+    process->prev = nullptr;
+
+    queu_processes.push_back(process);
+
+    return process;
+}
+
+Process* Interpreter::add_process(const char* name, bool root, int32_t priority)
 {
     Process* process = new Process(this, root);
     memccpy(process->name, name, '\0', strlen(name));
@@ -620,7 +689,7 @@ bool Interpreter::has_alive_processes() const
 
    // natives.push_back(native);
 
-    main_process->push(STRING(name));
+    main_process->push(SHARED_STRING(name));
     main_process->push(NATIVE(native));
 
 
@@ -630,7 +699,11 @@ bool Interpreter::has_alive_processes() const
     }
 
     main_process->pop();
-    main_process->pop();
+    Value b =main_process->pop();
+    delete b.string;
+ 
+
+
 }
 
 void Interpreter::defineNatives(const NativeReg* natives) 
@@ -715,6 +788,26 @@ u32 Interpreter::run()
     
     while ((!must_exit || !panicMode) && !WindowShouldClose())
     {
+        
+        if (queu_processes.getSize() > 0)
+        {
+            Process* process = queu_processes.back();
+            queu_processes.pop_back();
+            
+                if (!first_instance) 
+                {
+                        first_instance = process;
+                        last_instance = process;
+                    } else 
+                    {
+                        last_instance->next = process;
+                        process->prev = last_instance;
+                        last_instance = process;
+                    }
+           
+        }
+
+
         BeginDrawing();
         ClearBackground(BLACK);
         

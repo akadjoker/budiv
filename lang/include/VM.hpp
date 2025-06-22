@@ -1,4 +1,6 @@
+
 // #include <vector>
+// #include <unordered_set>
 // #include <algorithm>
 
 #include "String.hpp"
@@ -26,6 +28,7 @@ const int ID_ANGLE=2;
 Value INTEGER(int value);
 Value NUMBER(double value);
 Value STRING(const char* value);
+Value SHARED_STRING(const char* value);
 Value BOOLEAN(bool value);
 Value NIL();
 Value FUNCTION(ObjFunction* function);
@@ -168,19 +171,30 @@ public:
 };
 
 
-class ObjString : public GCObject {
+class ObjString: public GCObject  
+{
 public:
     char* data;
     int length;
-    ObjString(): GCObject(ObjType::STRING)
-    {
-        data = nullptr;
-        length = 0;
-    }
+    ObjString();
     ObjString(const char* str);
+    ObjString(const char* str,size_t length);
     ObjString(int value);
     ObjString(double value);
 
+
+     bool equals(const char* str) const 
+     {
+        if (!data || !str) return false;
+        return strcmp(data, str) == 0;
+    }
+    
+    bool equals(const ObjString* other) const 
+    {
+        if (!other || !data || !other->data) return false;
+        if (length != other->length) return false;
+        return strcmp(data, other->data) == 0;
+    }
 
     ~ObjString();
 };
@@ -286,6 +300,11 @@ private:
     int rootCount;
     int rootCapacity;
 
+    Vector<ObjString*> stringPool;  
+    UnorderedMap<String, ObjString*> stringMap;
+  
+  
+
 public:
     GarbageCollector();
     ~GarbageCollector();
@@ -301,6 +320,9 @@ public:
     void addRoot(GCObject** root);
     void collect();
     int countObjects();
+
+    ObjString* newString(const String& str);
+    ObjString* newString(const char* str);
 
 
 private:
@@ -442,6 +464,7 @@ class Interpreter {
     //blueprints
 
     ValueArray<Process*> processes;
+    ValueArray<Process*> queu_processes;
     ValueArray<ObjProcess*> raw_processes;
   
  
@@ -470,8 +493,8 @@ public:
 
     bool call_process(Process* process, int32_t priority = 0);
 
-    
-    
+    Process* queue_process(const char* name, int32_t priority);
+
     void Error(const char *format, ...);
     void Warning(const char *format, ...);
     void Info(const char *format, ...);

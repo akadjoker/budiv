@@ -648,7 +648,7 @@ bool Process::run( )
                     
                   //  INFO("Process '%s' called", process->name);
 
-                    Process* child = interpreter->add_process(process->name, false, 100);
+                    Process* child = interpreter->queue_process(process->name,  100);
                     
               
  
@@ -672,7 +672,7 @@ bool Process::run( )
                    // disassembleCode(&process->process->function->chunk, process->name);
                    // frame->slots = stackTop - argCount - 1;
        
-                  // return true;
+                   return true;
                 }
  
     
@@ -707,9 +707,9 @@ bool Process::run( )
                 frame_timer = 0.0; // Reset timer
                 
                 status = STATUS_RUNNING;
-                goto break_all;
+                //goto break_all;
 
-                // return true; 
+                return true; 
             }
             case OP_ADD:
             {

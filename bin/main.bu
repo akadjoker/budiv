@@ -7,7 +7,7 @@ process bala(_x,_y)
     var vy = random(-5,10);
     var gravity = 0.5;
     var life=random(50,100);
-    
+ 
 
   loop
   {
@@ -46,36 +46,24 @@ process bala(_x,_y)
 process main()
 {
    
-   var spawn_rate = 100;
+
   
     var i=0;
+    var j=0;
 
 
   loop 
   {
-
-   
      if (mouse_down(0))
      {
 
-        i=0;
-        while(i<10)
+        for( j=0;j<10;j=j+1)
         {
               bala(mouse_x(),mouse_y());
-              i=i+1;
+ 
         }
        
      }
-
-
-
-    
-        
-         
-            
-
-
-
      frame;
   }
   print("By!By! main");

@@ -298,10 +298,10 @@ int main()
 
   InitWindow(screenWidth, screenHeight, "BuEngine");
   SetTargetFPS(60);
-  bool done = false;
+ 
 
 
-  if (!vm.compile_file("main.bu"))
+  if (vm.compile_file("main.bu"))
   {
 
 
@@ -309,8 +309,8 @@ int main()
 
       //  Process* main = vm.find_process("_main_");
       //   main->run();
-  
-       done = true;
+   
+      vm.run();
    }
 
   //  if (!done)
@@ -325,7 +325,6 @@ int main()
   //     BeginDrawing();
   //     ClearBackground(BLACK);
   
-      vm.run();
 
   //     DrawFPS(10, 10);
   //     EndDrawing();
