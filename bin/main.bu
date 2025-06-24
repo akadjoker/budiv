@@ -14,7 +14,7 @@ process bala(_x,_y)
     var life=random(50,100);
  
 
-  loop
+  while(true)
   {
 
        x=x+vx;
@@ -26,7 +26,7 @@ process bala(_x,_y)
        life = life -1;
        if(life<=0)
        {
-     //   break;
+       // break;
        }
  
 
@@ -55,6 +55,7 @@ process main()
      
     var i=0;
     var j=0;
+    x=-100;
 
 
   loop 
@@ -62,7 +63,7 @@ process main()
      if (mouse_down(0))
      {
 
-        for(var j=0;j<10;j=j+1)
+        for(j=0;j<20;j=j+1)
         {
               bala(mouse_x(),mouse_y());
  

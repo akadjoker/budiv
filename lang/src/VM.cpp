@@ -4,6 +4,8 @@
 #include <raylib.h>
 GarbageCollector GC;
 
+extern Texture2D dummy;
+
 
 void Value::cleanup()
 {
@@ -409,6 +411,7 @@ Interpreter::Interpreter()
     main_process = add_process("_main_", true, 0);
     first_instance = main_process;
     panicMode = false;
+
     
 }
 
@@ -848,7 +851,8 @@ u32 Interpreter::run()
                 {
                     double x = i->stack[ID_X].number;
                     double y = i->stack[ID_Y].number;
-                    DrawCircle(x, y, 5, WHITE);
+                    DrawTexture(dummy, x, y, WHITE);
+                  // DrawCircle(x, y, 5, WHITE);
                     // Optional: DrawText(TextFormat("FPS: %.0f", 1.0/i->frame_interval), x, y-20, 12, GRAY);
                 }
             }

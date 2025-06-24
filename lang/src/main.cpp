@@ -18,6 +18,7 @@
 extern GarbageCollector GC;
 
 
+Texture2D dummy;
 
 
 //#define DEBUG_MEMORY
@@ -298,6 +299,7 @@ int main()
 
   InitWindow(screenWidth, screenHeight, "BuEngine");
   SetTargetFPS(60);
+      dummy = LoadTexture("assets/wabbit_alpha.png");
  
 
 

@@ -704,7 +704,7 @@ bool Process::run( )
                    // printStack();
                     
 
-                   // disassembleCode(&process->process->function->chunk, process->name);
+                 disassembleCode(&process->process->function->chunk, process->name);
        
                    return true;
                 }
@@ -713,7 +713,7 @@ bool Process::run( )
                // runtimeError("In call expected a function.");
           
 
-               // disassembleCode(&function->chunk, function->name);
+               //disassembleCode(&function->chunk, function->name);
 
 
                 break;
@@ -1067,8 +1067,7 @@ bool Process::run( )
     
     }
  
-     break_all:
-        return status == STATUS_RUNNING;
+   
     
     //INFO("Process '%s' running", name);
 
