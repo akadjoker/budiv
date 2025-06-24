@@ -228,7 +228,7 @@ class ObjFunction
 public:
     u8 arity;
     Chunk chunk;
-    char name[64];
+    char name[32];
     Vector<LoopContext> loopStack;
     ObjFunction();
     ObjFunction(const String& n);
@@ -242,7 +242,7 @@ class ObjProcess
  
 public:
   
-    char name[64];
+    char name[16];
     Process* process;
     ObjFunction* function;
     ObjProcess();
@@ -335,7 +335,7 @@ public:
 
 struct Local
 {
-    char name[128]{ '\0' };
+    char name[32]{ '\0' };
     u32 len;
     int depth;
     bool isArg;
@@ -356,17 +356,17 @@ class Process
 {
 private:
     static u32 nextPID;
-    static const s32 FRAMES_MAX = 1024;
-    static const s32 STACK_MAX = FRAMES_MAX * 256;
-    static const s32 UINT8_COUNT = 512; 
+    static const s32 FRAMES_MAX = 16;
+    static const s32 STACK_MAX = 256;//FRAMES_MAX * 256;
+    static const s32 UINT8_COUNT = 128; 
 
 
 
 
-     Local locals[UINT8_COUNT];
+    Local locals[UINT8_COUNT];
     int localCount;
     int defineLocals;
-    int scopeDepth;
+    s32 scopeDepth;
 
     CallFrame frames[FRAMES_MAX];
     CallFrame* currentFrame;
@@ -399,7 +399,7 @@ private:
 
 public:
  
-    char name[64];
+    char name[16];
     u32 id;
     s32 priority;
     ProcessStatus status;
@@ -418,7 +418,7 @@ public:
     int resolveLocal(const char* name,size_t len);
     int addLocal(const char* name);
 
-
+    void printStack() const;
     void resetStack();
     void push(Value value);
     Value pop();

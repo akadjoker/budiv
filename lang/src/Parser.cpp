@@ -662,25 +662,25 @@ void Parser::whileStatement()
  
 void Parser::forStatement()
 {
-   // beginScope();
+    beginScope();
 
   
 
     consume(TokenType::LEFT_PAREN, "Expect '(' after 'for'.");
 
-    // Initializer
-    // if (match(TokenType::SEMICOLON))
-    // {
-    //     // No initializer.
-    // }
-    // else if (match(TokenType::VAR))
-    // {
-    //     varDeclaration();
-    // }
-    // else
-    // {
+  //  Initializer
+    if (match(TokenType::SEMICOLON))
+    {
+        // No initializer.
+    }
+    else if (match(TokenType::VAR))
+    {
+        varDeclaration();
+    }
+    else
+    {
          expressionStatement();
-    // }
+    }
 
     int loopStart = current_function->chunk.count;
     LoopContext ctx;
@@ -726,7 +726,7 @@ void Parser::forStatement()
 
     patchBreakJumps();
  
-   // endScope();
+    endScope();
 }
 
 void Parser::ternario(bool canAssign)

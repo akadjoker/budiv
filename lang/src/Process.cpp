@@ -55,6 +55,30 @@ Process::~Process()
 
 }
 
+void Process::printStack() const
+{
+    printf("=== STACK DEBUG ===\n");
+    printf("Stack size: %ld\n", stackTop - stack);
+    
+    if (stackTop == stack) 
+    {
+        printf("Stack is empty\n");
+        printf("==================\n");
+        return;
+    }
+    
+   const int count = static_cast<int>(stackTop - stack);
+        printf("=== Stack (count: %d) ===\n", count);
+        
+        for (int i = 0; i < count; i++) 
+        {
+            printf("[%3d] ", i);  
+            PRINT_VALUE(stack[i]);  
+            printf("\n");
+        }
+    printf("==================\n");
+}
+
 void Process::setFrameSpeed(double speed_multiplier)
 {
     // speed_multiplier: 1.0 = normal, 2.0 = duplo, 0.5 = metade
@@ -633,12 +657,15 @@ bool Process::run( )
                 }
                 else if (IS_NATIVE(value))
                 {
-       
+                        
                         ObjNative *obj_native = AS_NATIVE(value);
                         NativeFn native = obj_native->function;
                         Value result = native(argCount, stackTop - argCount);
                         stackTop -= argCount + 1;
                         push(result);
+
+                     
+                   
                      //   return true;
 
                 } 
@@ -666,11 +693,18 @@ bool Process::run( )
                         Value arg = peek(i);
                         child->push(arg);
                     }
-        
+                   // pop();//???
+                   // pop();
+                    popn(argCount);
+             
+                    //frame->slots = stackTop - argCount - 1;
+                    
+                
+                    
+                   // printStack();
                     
 
                    // disassembleCode(&process->process->function->chunk, process->name);
-                   // frame->slots = stackTop - argCount - 1;
        
                    return true;
                 }

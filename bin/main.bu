@@ -1,4 +1,9 @@
  
+def teste(a,b)
+{
+  return a+ b;
+}
+
 process bala(_x,_y)
 {
     x=_x;
@@ -15,11 +20,13 @@ process bala(_x,_y)
        x=x+vx;
        y=y+vy;
 
+
+
        vy = vy + gravity; 
        life = life -1;
        if(life<=0)
        {
-        break;
+     //   break;
        }
  
 
@@ -45,9 +52,7 @@ process bala(_x,_y)
 
 process main()
 {
-   
-
-  
+     
     var i=0;
     var j=0;
 
@@ -57,7 +62,7 @@ process main()
      if (mouse_down(0))
      {
 
-        for( j=0;j<10;j=j+1)
+        for(var j=0;j<10;j=j+1)
         {
               bala(mouse_x(),mouse_y());
  

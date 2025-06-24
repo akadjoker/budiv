@@ -1101,32 +1101,32 @@ bool Interpreter::pop_nil()
 void Interpreter::push_int(int value)
 {
     double number = static_cast<double>(value);
-     push(std::move(NUMBER(number)));
+     push( NUMBER(number));
 }
 
 void Interpreter::push_double(double value)
 {
-    return push(std::move(NUMBER(value)));
+    return push( NUMBER(value));
 }
 
 void Interpreter::push_bool(bool value)
 {
-    return push(std::move(BOOLEAN(value)));
+    return push( BOOLEAN(value));
 }
 
 void Interpreter::push_nil()
 {
-    return push(std::move(NIL()));
+    return push(NIL());
 }
 
 void Interpreter::push_string(const char *value)
 {
-    return push(std::move(STRING(value)));
+    return push( STRING(value));
 }
 
 void Interpreter::push_string(const String &str)
 {
-    return push(std::move(STRING(str.c_str())));
+    return push( STRING(str.c_str()));
 }
 
 
